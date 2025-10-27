@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="FairHire.API/FairHire.API.csproj" />
+  <Project Path="FairHire.Application/FairHire.Application.csproj" />
+  <Project Path="FairHire.Domain/FairHire.Domain.csproj" />
+  <Project Path="FairHire.Infrastructure.Postgres/FairHire.Infrastructure.Postgres.csproj" />
+</Solution>
