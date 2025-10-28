@@ -1,4 +1,4 @@
-using FairHire.API;
+﻿using FairHire.API;
 using FairHire.API.Enpoints;
 
 var builder = WebApplication.CreateBuilder(args);

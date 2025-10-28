@@ -29,5 +29,6 @@ public static class DependencyInjection
         }).AddRoles<IdentityRole<Guid>>()
         .AddEntityFrameworkStores<AppDbContext>();
 
+
     }
 }

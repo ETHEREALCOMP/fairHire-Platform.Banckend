@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "E:\\fairHire\\FairHire.API\\FairHire.API.csproj": {}
+    "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.API\\FairHire.API.csproj": {}
   },
   "projects": {
-    "E:\\fairHire\\FairHire.API\\FairHire.API.csproj": {
+    "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.API\\FairHire.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\fairHire\\FairHire.API\\FairHire.API.csproj",
+        "projectUniqueName": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.API\\FairHire.API.csproj",
         "projectName": "FairHire.API",
-        "projectPath": "E:\\fairHire\\FairHire.API\\FairHire.API.csproj",
-        "packagesPath": "C:\\Users\\Ethereal\\.nuget\\packages\\",
-        "outputPath": "E:\\fairHire\\FairHire.API\\obj\\",
+        "projectPath": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.API\\FairHire.API.csproj",
+        "packagesPath": "C:\\Users\\D\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Ethereal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\D\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -32,11 +32,11 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "E:\\fairHire\\FairHire.Application\\FairHire.Application.csproj": {
-                "projectPath": "E:\\fairHire\\FairHire.Application\\FairHire.Application.csproj"
+              "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Application\\FairHire.Application.csproj": {
+                "projectPath": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Application\\FairHire.Application.csproj"
               },
-              "E:\\fairHire\\FairHire.Infrastructure.Postgres\\FairHire.Infrastructure.Postgres.csproj": {
-                "projectPath": "E:\\fairHire\\FairHire.Infrastructure.Postgres\\FairHire.Infrastructure.Postgres.csproj"
+              "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Infrastructure.Postgres\\FairHire.Infrastructure.Postgres.csproj": {
+                "projectPath": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Infrastructure.Postgres\\FairHire.Infrastructure.Postgres.csproj"
               }
             }
           }
@@ -58,6 +58,12 @@
           "targetAlias": "net10.0",
           "dependencies": {
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[9.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.10, )"
             },
@@ -508,20 +514,20 @@
         }
       }
     },
-    "E:\\fairHire\\FairHire.Application\\FairHire.Application.csproj": {
+    "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Application\\FairHire.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\fairHire\\FairHire.Application\\FairHire.Application.csproj",
+        "projectUniqueName": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Application\\FairHire.Application.csproj",
         "projectName": "FairHire.Application",
-        "projectPath": "E:\\fairHire\\FairHire.Application\\FairHire.Application.csproj",
-        "packagesPath": "C:\\Users\\Ethereal\\.nuget\\packages\\",
-        "outputPath": "E:\\fairHire\\FairHire.Application\\obj\\",
+        "projectPath": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Application\\FairHire.Application.csproj",
+        "packagesPath": "C:\\Users\\D\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Ethereal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\D\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -536,8 +542,8 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "E:\\fairHire\\FairHire.Infrastructure.Postgres\\FairHire.Infrastructure.Postgres.csproj": {
-                "projectPath": "E:\\fairHire\\FairHire.Infrastructure.Postgres\\FairHire.Infrastructure.Postgres.csproj"
+              "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Infrastructure.Postgres\\FairHire.Infrastructure.Postgres.csproj": {
+                "projectPath": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Infrastructure.Postgres\\FairHire.Infrastructure.Postgres.csproj"
               }
             }
           }
@@ -869,20 +875,20 @@
         }
       }
     },
-    "E:\\fairHire\\FairHire.Domain\\FairHire.Domain.csproj": {
+    "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Domain\\FairHire.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\fairHire\\FairHire.Domain\\FairHire.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Domain\\FairHire.Domain.csproj",
         "projectName": "FairHire.Domain",
-        "projectPath": "E:\\fairHire\\FairHire.Domain\\FairHire.Domain.csproj",
-        "packagesPath": "C:\\Users\\Ethereal\\.nuget\\packages\\",
-        "outputPath": "E:\\fairHire\\FairHire.Domain\\obj\\",
+        "projectPath": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Domain\\FairHire.Domain.csproj",
+        "packagesPath": "C:\\Users\\D\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Ethereal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\D\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -1214,20 +1220,20 @@
         }
       }
     },
-    "E:\\fairHire\\FairHire.Infrastructure.Postgres\\FairHire.Infrastructure.Postgres.csproj": {
+    "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Infrastructure.Postgres\\FairHire.Infrastructure.Postgres.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\fairHire\\FairHire.Infrastructure.Postgres\\FairHire.Infrastructure.Postgres.csproj",
+        "projectUniqueName": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Infrastructure.Postgres\\FairHire.Infrastructure.Postgres.csproj",
         "projectName": "FairHire.Infrastructure.Postgres",
-        "projectPath": "E:\\fairHire\\FairHire.Infrastructure.Postgres\\FairHire.Infrastructure.Postgres.csproj",
-        "packagesPath": "C:\\Users\\Ethereal\\.nuget\\packages\\",
-        "outputPath": "E:\\fairHire\\FairHire.Infrastructure.Postgres\\obj\\",
+        "projectPath": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Infrastructure.Postgres\\FairHire.Infrastructure.Postgres.csproj",
+        "packagesPath": "C:\\Users\\D\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Infrastructure.Postgres\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Ethereal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\D\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -1242,8 +1248,8 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "E:\\fairHire\\FairHire.Domain\\FairHire.Domain.csproj": {
-                "projectPath": "E:\\fairHire\\FairHire.Domain\\FairHire.Domain.csproj"
+              "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Domain\\FairHire.Domain.csproj": {
+                "projectPath": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Domain\\FairHire.Domain.csproj"
               }
             }
           }
@@ -1265,6 +1271,16 @@
           "targetAlias": "net10.0",
           "dependencies": {
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.10, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.10, )"
             },

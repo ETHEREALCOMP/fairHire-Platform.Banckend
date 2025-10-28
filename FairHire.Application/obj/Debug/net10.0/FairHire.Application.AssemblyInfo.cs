@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FairHire.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ba7a287e75991e8cf47c48fc4dc14e9c59dbd6c2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7e99d60bc8b28194ebcb70cfe5faf070f7d6fefa")]
 [assembly: System.Reflection.AssemblyProductAttribute("FairHire.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FairHire.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
