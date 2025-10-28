@@ -1,4 +1,5 @@
-﻿using FairHire.Application.Feature.TestTaskFeature.Commands;
+﻿using FairHire.API.Jwt;
+using FairHire.Application.Feature.TestTaskFeature.Commands;
 using FairHire.Application.Feature.TestTaskFeature.Queries;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,7 @@ public static class DependencyInjection
         // Implementation for adding application services
         services.AddCommand();
         services.AddQuery();
+        services.AddSingleton<JwtService>();
     }
 
     private static IServiceCollection AddCommand(this IServiceCollection services)

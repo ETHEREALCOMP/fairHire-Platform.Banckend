@@ -22,20 +22,21 @@ public static class DependencyInjection
     private static void AddAuth(this IServiceCollection services,
         IConfiguration configuration) 
     {
-        services.AddAuthentication().AddJwtBearer();
         services.AddAuthorization();
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(o =>
+        .AddJwtBearer(options =>
         {
-            o.TokenValidationParameters = new TokenValidationParameters
+            options.RequireHttpsMetadata = true; // true in production
+            options.TokenValidationParameters = new TokenValidationParameters
             {
-                ValidateIssuer = true,
-                ValidateAudience = true,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = configuration["Issuer"],
-                ValidAudience = configuration["Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["SigningKey"])),
-                ClockSkew = TimeSpan.Zero
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"])),
+                ValidateIssuer = true,
+                ValidIssuer = configuration["Jwt:Issuer"],
+                ValidateAudience = true,
+                ValidAudience = configuration["Jwt:Audience"],
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.FromMinutes(2)
             };
         });
     }

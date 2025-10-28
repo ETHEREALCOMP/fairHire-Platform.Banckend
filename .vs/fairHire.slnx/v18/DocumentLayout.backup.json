@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "E:\\fairHire\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9FB9B5B5-B083-F03F-A6D3-F21C1609908B}|FairHire.API\\FairHire.API.csproj|e:\\fairhire\\fairhire.api\\enpoints\\authendpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9FB9B5B5-B083-F03F-A6D3-F21C1609908B}|FairHire.API\\FairHire.API.csproj|solutionrelative:fairhire.api\\enpoints\\authendpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{9FB9B5B5-B083-F03F-A6D3-F21C1609908B}|FairHire.API\\FairHire.API.csproj|e:\\fairhire\\fairhire.api\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9FB9B5B5-B083-F03F-A6D3-F21C1609908B}|FairHire.API\\FairHire.API.csproj|solutionrelative:fairhire.api\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{00BF5B71-15AC-A54F-3819-C3E808D3ACD0}|FairHire.Application\\FairHire.Application.csproj|e:\\fairhire\\fairhire.application\\jwt\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{00BF5B71-15AC-A54F-3819-C3E808D3ACD0}|FairHire.Application\\FairHire.Application.csproj|solutionrelative:fairhire.application\\jwt\\jwtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{9FB9B5B5-B083-F03F-A6D3-F21C1609908B}|FairHire.API\\FairHire.API.csproj|e:\\fairhire\\fairhire.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9FB9B5B5-B083-F03F-A6D3-F21C1609908B}|FairHire.API\\FairHire.API.csproj|solutionrelative:fairhire.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9FB9B5B5-B083-F03F-A6D3-F21C1609908B}|FairHire.API\\FairHire.API.csproj|e:\\fairhire\\fairhire.api\\enpoints\\authendpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9FB9B5B5-B083-F03F-A6D3-F21C1609908B}|FairHire.API\\FairHire.API.csproj|solutionrelative:fairhire.api\\enpoints\\authendpoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,37 +42,52 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "JwtService.cs",
+              "DocumentMoniker": "E:\\fairHire\\FairHire.Application\\Jwt\\JwtService.cs",
+              "RelativeDocumentMoniker": "FairHire.Application\\Jwt\\JwtService.cs",
+              "ToolTip": "E:\\fairHire\\FairHire.Application\\Jwt\\JwtService.cs",
+              "RelativeToolTip": "FairHire.Application\\Jwt\\JwtService.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAA/wBMAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T12:39:58.199Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "E:\\fairHire\\FairHire.API\\Program.cs",
               "RelativeDocumentMoniker": "FairHire.API\\Program.cs",
               "ToolTip": "E:\\fairHire\\FairHire.API\\Program.cs",
               "RelativeToolTip": "FairHire.API\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T11:54:23.244Z"
+              "WhenOpened": "2025-10-28T11:54:23.244Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "DependencyInjection.cs",
               "DocumentMoniker": "E:\\fairHire\\FairHire.API\\DependencyInjection.cs",
               "RelativeDocumentMoniker": "FairHire.API\\DependencyInjection.cs",
               "ToolTip": "E:\\fairHire\\FairHire.API\\DependencyInjection.cs",
               "RelativeToolTip": "FairHire.API\\DependencyInjection.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAABEAAAAAAAAAAAAwwBgAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T11:53:53.446Z"
+              "WhenOpened": "2025-10-28T11:53:53.446Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "AuthEndpoint.cs",
               "DocumentMoniker": "E:\\fairHire\\FairHire.API\\Enpoints\\AuthEndpoint.cs",
               "RelativeDocumentMoniker": "FairHire.API\\Enpoints\\AuthEndpoint.cs",
               "ToolTip": "E:\\fairHire\\FairHire.API\\Enpoints\\AuthEndpoint.cs",
               "RelativeToolTip": "FairHire.API\\Enpoints\\AuthEndpoint.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAABCAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-28T10:54:30.869Z",
               "EditorCaption": ""

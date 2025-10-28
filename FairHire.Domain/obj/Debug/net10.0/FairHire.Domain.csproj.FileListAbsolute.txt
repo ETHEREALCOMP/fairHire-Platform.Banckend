@@ -1,0 +1,13 @@
+E:\fairHire\FairHire.Domain\bin\Debug\net10.0\FairHire.Domain.deps.json
+E:\fairHire\FairHire.Domain\bin\Debug\net10.0\FairHire.Domain.dll
+E:\fairHire\FairHire.Domain\bin\Debug\net10.0\FairHire.Domain.pdb
+E:\fairHire\FairHire.Domain\obj\Debug\net10.0\FairHire.Domain.csproj.AssemblyReference.cache
+E:\fairHire\FairHire.Domain\obj\Debug\net10.0\FairHire.Domain.GeneratedMSBuildEditorConfig.editorconfig
+E:\fairHire\FairHire.Domain\obj\Debug\net10.0\FairHire.Domain.AssemblyInfoInputs.cache
+E:\fairHire\FairHire.Domain\obj\Debug\net10.0\FairHire.Domain.AssemblyInfo.cs
+E:\fairHire\FairHire.Domain\obj\Debug\net10.0\FairHire.Domain.csproj.CoreCompileInputs.cache
+E:\fairHire\FairHire.Domain\obj\Debug\net10.0\FairHire.Domain.sourcelink.json
+E:\fairHire\FairHire.Domain\obj\Debug\net10.0\FairHire.Domain.dll
+E:\fairHire\FairHire.Domain\obj\Debug\net10.0\refint\FairHire.Domain.dll
+E:\fairHire\FairHire.Domain\obj\Debug\net10.0\FairHire.Domain.pdb
+E:\fairHire\FairHire.Domain\obj\Debug\net10.0\ref\FairHire.Domain.dll

@@ -1,0 +1,16 @@
+E:\fairHire\FairHire.Infrastructure.Postgres\bin\Debug\net10.0\FairHire.Infrastructure.Postgres.deps.json
+E:\fairHire\FairHire.Infrastructure.Postgres\bin\Debug\net10.0\FairHire.Infrastructure.Postgres.dll
+E:\fairHire\FairHire.Infrastructure.Postgres\bin\Debug\net10.0\FairHire.Infrastructure.Postgres.pdb
+E:\fairHire\FairHire.Infrastructure.Postgres\bin\Debug\net10.0\FairHire.Domain.dll
+E:\fairHire\FairHire.Infrastructure.Postgres\bin\Debug\net10.0\FairHire.Domain.pdb
+E:\fairHire\FairHire.Infrastructure.Postgres\obj\Debug\net10.0\FairHire.Infrastructure.Postgres.csproj.AssemblyReference.cache
+E:\fairHire\FairHire.Infrastructure.Postgres\obj\Debug\net10.0\FairHire.Infrastructure.Postgres.GeneratedMSBuildEditorConfig.editorconfig
+E:\fairHire\FairHire.Infrastructure.Postgres\obj\Debug\net10.0\FairHire.Infrastructure.Postgres.AssemblyInfoInputs.cache
+E:\fairHire\FairHire.Infrastructure.Postgres\obj\Debug\net10.0\FairHire.Infrastructure.Postgres.AssemblyInfo.cs
+E:\fairHire\FairHire.Infrastructure.Postgres\obj\Debug\net10.0\FairHire.Infrastructure.Postgres.csproj.CoreCompileInputs.cache
+E:\fairHire\FairHire.Infrastructure.Postgres\obj\Debug\net10.0\FairHire.Infrastructure.Postgres.sourcelink.json
+E:\fairHire\FairHire.Infrastructure.Postgres\obj\Debug\net10.0\FairHire.4D3A5144.Up2Date
+E:\fairHire\FairHire.Infrastructure.Postgres\obj\Debug\net10.0\FairHire.Infrastructure.Postgres.dll
+E:\fairHire\FairHire.Infrastructure.Postgres\obj\Debug\net10.0\refint\FairHire.Infrastructure.Postgres.dll
+E:\fairHire\FairHire.Infrastructure.Postgres\obj\Debug\net10.0\FairHire.Infrastructure.Postgres.pdb
+E:\fairHire\FairHire.Infrastructure.Postgres\obj\Debug\net10.0\ref\FairHire.Infrastructure.Postgres.dll
