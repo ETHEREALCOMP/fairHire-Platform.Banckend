@@ -1,10 +1,11 @@
 ﻿using FairHire.Domain;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FairHire.Infrastructure.Postgres;
 
-public sealed class AppDbContext: IdentityDbContext<User, Role, Guid>
+public sealed class AppDbContext: IdentityDbContext<User, IdentityRole<Guid>, Guid>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options) {}

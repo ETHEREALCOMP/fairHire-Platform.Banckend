@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FairHire.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8eef0933a53c25c499287d9825d409d52f257c27")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ba7a287e75991e8cf47c48fc4dc14e9c59dbd6c2")]
 [assembly: System.Reflection.AssemblyProductAttribute("FairHire.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FairHire.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

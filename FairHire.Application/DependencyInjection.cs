@@ -1,4 +1,5 @@
 ﻿using FairHire.API.Jwt;
+using FairHire.Application.Auth.Commnad;
 using FairHire.Application.Feature.TestTaskFeature.Commands;
 using FairHire.Application.Feature.TestTaskFeature.Queries;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +21,9 @@ public static class DependencyInjection
 
     private static IServiceCollection AddCommand(this IServiceCollection services)
     {
+        services.AddScoped<SignInCommand>();
+        services.AddScoped<SignUpCommand>();
+        services.AddScoped<SignOutCommand>();
         services.AddScoped<CreateTestTaskCommand>();
         services.AddScoped<UpdateTestTaskCommand>();
         services.AddScoped<DeleteTestTaskCommand>();

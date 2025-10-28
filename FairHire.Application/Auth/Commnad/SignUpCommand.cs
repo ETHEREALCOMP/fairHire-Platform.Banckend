@@ -22,6 +22,7 @@ public sealed class SignUpCommand(UserManager<User> userManager)
             Password = request.Password
         };
 
+
         if (request.Password != request.ConfPassword)
         {
             throw new InvalidOperationException("Password and Confirm Password do not match.");
