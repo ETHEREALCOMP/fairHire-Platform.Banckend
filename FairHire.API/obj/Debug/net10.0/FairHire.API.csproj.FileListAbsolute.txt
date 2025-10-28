@@ -50,3 +50,8 @@ E:\fairHire\FairHire.API\obj\Debug\net10.0\refint\FairHire.API.dll
 E:\fairHire\FairHire.API\obj\Debug\net10.0\FairHire.API.pdb
 E:\fairHire\FairHire.API\obj\Debug\net10.0\FairHire.API.genruntimeconfig.cache
 E:\fairHire\FairHire.API\obj\Debug\net10.0\ref\FairHire.API.dll
+E:\fairHire\FairHire.API\bin\Debug\net10.0\Microsoft.OpenApi.dll
+E:\fairHire\FairHire.API\bin\Debug\net10.0\Swashbuckle.AspNetCore.Swagger.dll
+E:\fairHire\FairHire.API\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+E:\fairHire\FairHire.API\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+E:\fairHire\FairHire.API\obj\Debug\net10.0\FairHire.API.MvcApplicationPartsAssemblyInfo.cs
