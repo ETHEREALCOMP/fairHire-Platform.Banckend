@@ -315,6 +315,7 @@
         "dependencies": {
           "FairHire.Domain": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "9.0.10",
+          "Microsoft.EntityFrameworkCore": "9.0.10",
           "Microsoft.Extensions.Configuration": "9.0.10",
           "Microsoft.Extensions.DependencyInjection": "9.0.10",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.4"

@@ -1,0 +1,18 @@
+﻿version: '3.8' 
+
+services:
+  db:
+    image: postgres:latest
+    container_name: fair_hire_db
+    restart: always
+    environment:
+      POSTGRES_USER: sa
+      POSTGRES_PASSWORD: pwd 
+      POSTGRES_DB: FairHireDB 
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql 
+
+volumes:
+  postgres_data:

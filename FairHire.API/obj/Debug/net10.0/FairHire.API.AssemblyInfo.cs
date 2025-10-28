@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FairHire.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ba7a287e75991e8cf47c48fc4dc14e9c59dbd6c2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ffcce8405294d783d8640a24d4a141e47f7667ac")]
 [assembly: System.Reflection.AssemblyProductAttribute("FairHire.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FairHire.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
