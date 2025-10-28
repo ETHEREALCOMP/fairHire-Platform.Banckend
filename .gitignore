@@ -1,0 +1,120 @@
+# -----------------------------
+# OS junk
+# -----------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# -----------------------------
+# Visual Studio / VS Code / JetBrains
+# -----------------------------
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+.vscode/
+.idea/
+*.sln.iml
+
+# ReSharper / Rider
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# NCrunch
+*.ncrunch*
+_NCrunch_*
+.*crunch*.local.xml
+
+# dotCover / StyleCop
+.dotCover
+StyleCop.Cache
+
+# -----------------------------
+# Build & publish artifacts
+# -----------------------------
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+**/publish/
+[Bb]enchmarkDotNet.Artifacts/
+
+# MSBuild / TFM-specific intermediates
+project.lock.json
+project.fragment.lock.json
+
+# -----------------------------
+# Testing outputs
+# -----------------------------
+[Tt]est[Rr]esult*/
+*.trx
+*.coverage
+*.coveragexml
+coverage*/
+
+# -----------------------------
+# Packages / NuGet
+# -----------------------------
+# Якщо використовуєш packages/ у репо (застарілий варіант) — ігноруємо:
+packages/
+# але залишаємо build-скрипти й конфіг:
+!**/packages/build/
+!**/packages/repositories.config
+
+# Локальні кеші NuGet
+.nuget/packages/
+
+# -----------------------------
+# Secrets & local config
+# -----------------------------
+secrets.json
+**/appsettings.*.local.json
+**/appsettings.Local.json
+.env
+.env.*
+.env.*.local
+# Azure Functions локальні налаштування
+local.settings.json
+
+# -----------------------------
+# EF Core (зазвичай Міграції ТРЕБА комітити, тому НЕ ігноруємо)
+# -----------------------------
+# /Migrations — не чіпаємо
+
+# -----------------------------
+# IIS / Hosting
+# -----------------------------
+iisexpress/
+**/.vsconfig
+
+# -----------------------------
+# Frontend (якщо є у цьому ж репо)
+# -----------------------------
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+# LibMan відновлює бібліотеки у wwwroot/lib
+wwwroot/lib/
+
+# -----------------------------
+# Misc
+# -----------------------------
+*.swp
+*.tmp
+*.bak
+*.orig
+*.log
+*.tlog
+
+# Сертифікати/ключі (якщо раптом генеруються локально)
+*.pfx
+*.p12
+*.key
+*.snk
