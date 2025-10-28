@@ -1,8 +1,10 @@
-﻿namespace FairHire.Domain;
+﻿using Microsoft.AspNetCore.Identity;
 
-public sealed class User
+namespace FairHire.Domain;
+
+public sealed class User : IdentityUser<Guid>
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     public required string Name { get; set; }
 
