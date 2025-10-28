@@ -1,7 +1,7 @@
-﻿using FairHire.API.Jwt;
-using FairHire.Application.Auth.Commnad;
+﻿using FairHire.Application.Auth.Commnad;
 using FairHire.Application.Feature.TestTaskFeature.Commands;
 using FairHire.Application.Feature.TestTaskFeature.Queries;
+using FairHire.Application.Jwt;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

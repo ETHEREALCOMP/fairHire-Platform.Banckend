@@ -2743,23 +2743,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\D\\.nuget\\packages\\": {},
+    "C:\\Users\\Ethereal\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Infrastructure.Postgres\\FairHire.Infrastructure.Postgres.csproj",
+      "projectUniqueName": "E:\\fairHire\\FairHire.Infrastructure.Postgres\\FairHire.Infrastructure.Postgres.csproj",
       "projectName": "FairHire.Infrastructure.Postgres",
-      "projectPath": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Infrastructure.Postgres\\FairHire.Infrastructure.Postgres.csproj",
-      "packagesPath": "C:\\Users\\D\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Infrastructure.Postgres\\obj\\",
+      "projectPath": "E:\\fairHire\\FairHire.Infrastructure.Postgres\\FairHire.Infrastructure.Postgres.csproj",
+      "packagesPath": "C:\\Users\\Ethereal\\.nuget\\packages\\",
+      "outputPath": "E:\\fairHire\\FairHire.Infrastructure.Postgres\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\D\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Ethereal\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2774,8 +2774,8 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Domain\\FairHire.Domain.csproj": {
-              "projectPath": "C:\\Users\\D\\source\\repos\\ETHEREALCOMP\\fairHire-Platform.Banckend\\FairHire.Domain\\FairHire.Domain.csproj"
+            "E:\\fairHire\\FairHire.Domain\\FairHire.Domain.csproj": {
+              "projectPath": "E:\\fairHire\\FairHire.Domain\\FairHire.Domain.csproj"
             }
           }
         }

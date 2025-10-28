@@ -16,10 +16,10 @@ public sealed class SignUpCommand(UserManager<User> userManager)
 
         var newUser = new User
         {
-            UserName = request.Email,
-            Email = request.Email,
             Name = request.Name,
-            Password = request.Password
+            UserName = request.Name,
+            Email = request.Email,
+            Password = request.Password,
         };
 
 
@@ -30,8 +30,13 @@ public sealed class SignUpCommand(UserManager<User> userManager)
 
         var res = await userManager.CreateAsync(newUser, request.Password);
 
-        if (!res.Succeeded)
+        if (res.Succeeded == false)
         {
+            res.Errors.ToList().ForEach(e => 
+            {
+                Console.WriteLine($"Error Code: {e.Code}, Description: {e.Description}");
+            });
+
             throw new InvalidOperationException("Failed to create user.");
         }
 

@@ -32,3 +32,5 @@ C:\Users\D\source\repos\ETHEREALCOMP\fairHire-Platform.Banckend\FairHire.Infrast
 C:\Users\D\source\repos\ETHEREALCOMP\fairHire-Platform.Banckend\FairHire.Infrastructure.Postgres\obj\Debug\net10.0\ref\FairHire.Infrastructure.Postgres.dll
 C:\Users\D\source\repos\ETHEREALCOMP\fairHire-Platform.Banckend\FairHire.Infrastructure.Postgres\bin\Debug\net10.0\FairHire.Infrastructure.Postgres.runtimeconfig.json
 C:\Users\D\source\repos\ETHEREALCOMP\fairHire-Platform.Banckend\FairHire.Infrastructure.Postgres\obj\Debug\net10.0\FairHire.Infrastructure.Postgres.genruntimeconfig.cache
+E:\fairHire\FairHire.Infrastructure.Postgres\bin\Debug\net10.0\FairHire.Infrastructure.Postgres.runtimeconfig.json
+E:\fairHire\FairHire.Infrastructure.Postgres\obj\Debug\net10.0\FairHire.Infrastructure.Postgres.genruntimeconfig.cache

@@ -85,7 +85,6 @@ namespace FairHire.Infrastructure.Postgres.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 

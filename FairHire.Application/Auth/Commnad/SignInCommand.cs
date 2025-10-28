@@ -1,5 +1,5 @@
-﻿using FairHire.API.Jwt;
-using FairHire.Application.Auth.Models.Request;
+﻿using FairHire.Application.Auth.Models.Request;
+using FairHire.Application.Jwt;
 using FairHire.Domain;
 using Microsoft.AspNetCore.Identity;
 

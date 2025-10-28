@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FairHire.Infrastructure.Postgres.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251028170211_Init")]
+    [Migration("20251028180859_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -88,7 +88,6 @@ namespace FairHire.Infrastructure.Postgres.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 

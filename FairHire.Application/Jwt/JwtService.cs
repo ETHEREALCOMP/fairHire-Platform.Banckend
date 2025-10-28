@@ -4,15 +4,14 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace FairHire.API.Jwt; 
+namespace FairHire.Application.Jwt; 
 
-public class JwtService
+public class JwtService(IConfiguration configuration)
 {
-    private readonly IConfiguration configuration;
     public  string IssueToken(Guid userId, string email)
     {
         var jwt = configuration.GetSection("Jwt");
-        var key = jwt.Key;
+        var key = jwt["Key"];
 
         if (string.IsNullOrWhiteSpace(key)) throw new InvalidOperationException("Missing Jwt:Key");
         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
