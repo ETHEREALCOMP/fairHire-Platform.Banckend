@@ -1,9 +1,10 @@
 ﻿using FairHire.Domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FairHire.Infrastructure.Postgres;
 
-public sealed class AppDbContext: DbContext
+public sealed class AppDbContext: IdentityDbContext<User, Role, Guid>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options) {}
@@ -14,8 +15,15 @@ public sealed class AppDbContext: DbContext
 
     public DbSet<Company> Companies { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder builder)
     {
-        base.OnModelCreating(modelBuilder);
+        base.OnModelCreating(builder);
+
+        builder.Entity<User>(b =>
+        {
+            b.Property(u => u.Name).HasMaxLength(100);
+            b.Property(u => u.UserName).HasMaxLength(100);
+            b.HasIndex(u => u.NormalizedEmail).HasDatabaseName("IX_User_NormalizedEmail");
+        });
     }
 }

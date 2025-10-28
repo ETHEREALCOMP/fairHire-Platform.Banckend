@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FairHire.Infrastructure.Postgres")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+37738fc9b67067a8f80f0fd13b660c1e843d5b18")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7b8d70834396b32b5415800d5d94ec04295ce7cf")]
 [assembly: System.Reflection.AssemblyProductAttribute("FairHire.Infrastructure.Postgres")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FairHire.Infrastructure.Postgres")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
