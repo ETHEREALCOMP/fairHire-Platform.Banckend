@@ -8,25 +8,42 @@ namespace FairHire.Application.Jwt;
 
 public class JwtService(IConfiguration configuration)
 {
-    public  string IssueToken(Guid userId, string email)
+    public string IssueToken(Guid userId, string email, IEnumerable<string> roles, string? activeRole)
     {
         var jwt = configuration.GetSection("Jwt");
-        var key = jwt["Key"];
+        var key = jwt["Key"] ?? throw new InvalidOperationException("Missing Jwt:Key");
+        var issuer = jwt["Issuer"] ?? throw new InvalidOperationException("Missing Jwt:Issuer");
+        var audience = jwt["Audience"] ?? throw new InvalidOperationException("Missing Jwt:Audience");
 
-        if (string.IsNullOrWhiteSpace(key)) throw new InvalidOperationException("Missing Jwt:Key");
         var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
         var creds = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
-        var claims = new[]
+
+        var claims = new List<Claim>
         {
-            new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-            new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, email)
+            new(JwtRegisteredClaimNames.Sub, userId.ToString()),
+            new(ClaimTypes.NameIdentifier, userId.ToString()),
+            new(JwtRegisteredClaimNames.Email, email),
+            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
-        var jwtToken = new JwtSecurityToken(
-            issuer: jwt["Issuer"], audience: jwt["Audience"],
-            claims: claims, expires: DateTime.UtcNow.AddHours(2), signingCredentials: creds);
+        // Рольові клейми (по одному на роль)
+        foreach (var r in roles.Distinct(StringComparer.OrdinalIgnoreCase))
+            claims.Add(new Claim(ClaimTypes.Role, r));
 
-        return (new JwtSecurityTokenHandler().WriteToken(jwtToken));
+        // Активна роль для сесії (кастомний клейм)
+        if (!string.IsNullOrWhiteSpace(activeRole))
+            claims.Add(new Claim("active_role", activeRole));
+
+        var now = DateTime.UtcNow;
+        var token = new JwtSecurityToken(
+            issuer: issuer,
+            audience: audience,
+            claims: claims,
+            notBefore: now,
+            expires: now.AddMinutes(5), // короткий TTL
+            signingCredentials: creds
+        );
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }

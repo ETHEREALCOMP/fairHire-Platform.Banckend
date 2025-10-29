@@ -9,37 +9,36 @@ public sealed class SignUpCommand(UserManager<User> userManager)
     public async Task<Guid> ExecuteAsync(SignUpRequest request, CancellationToken ct)
     {
         // Implementation for sign-up command
-        if (await userManager.FindByEmailAsync(request.Email) is not null)
-        {
-            throw new InvalidOperationException("User with this email already exists.");
-        }
+        if (request.Password != request.ConfPassword)
+            throw new InvalidOperationException("Password and Confirm Password do not match.");
 
-        var newUser = new User
+        if (await userManager.FindByEmailAsync(request.Email) is not null)
+            throw new InvalidOperationException("User with this email already exists.");
+
+        var user = new User
         {
+            Id = Guid.NewGuid(),
             Name = request.Name,
-            UserName = request.Name,
-            Email = request.Email,
-            Password = request.Password,
+            UserName = request.Email, // логін по email
+            Email = request.Email
         };
 
+        var create = await userManager.CreateAsync(user, request.Password);
+        if (!create.Succeeded)
+            throw new InvalidOperationException(string.Join("; ", create.Errors.Select(e => e.Description)));
 
-        if (request.Password != request.ConfPassword)
+        // Бізнес-логіка: за замовчуванням developer (company — після апруву)
+        var roleToAssign = (request.Role?.Trim().ToLowerInvariant()) switch
         {
-            throw new InvalidOperationException("Password and Confirm Password do not match.");
-        } 
+            "company" => "company",
+            "dev" => "dev",
+            _ => "dev" // дефолт, якщо не передали або передали сміття
+        };
 
-        var res = await userManager.CreateAsync(newUser, request.Password);
+        var addRole = await userManager.AddToRoleAsync(user, roleToAssign);
+        if (!addRole.Succeeded)
+            throw new InvalidOperationException(string.Join("; ", addRole.Errors.Select(e => e.Description)));
 
-        if (res.Succeeded == false)
-        {
-            res.Errors.ToList().ForEach(e => 
-            {
-                Console.WriteLine($"Error Code: {e.Code}, Description: {e.Description}");
-            });
-
-            throw new InvalidOperationException("Failed to create user.");
-        }
-
-        return newUser.Id;
+        return user.Id;
     }
 }

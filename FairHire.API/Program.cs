@@ -8,6 +8,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+await app.SeedAsync();
+
 
 app.UseAuthentication();
 app.UseAuthorization();
