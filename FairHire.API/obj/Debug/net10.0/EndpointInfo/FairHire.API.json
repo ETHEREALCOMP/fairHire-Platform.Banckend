@@ -66,6 +66,10 @@
           "password": {
             "type": "string",
             "nullable": true
+          },
+          "desiredRole": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -75,7 +79,8 @@
           "confPassword",
           "email",
           "name",
-          "password"
+          "password",
+          "role"
         ],
         "type": "object",
         "properties": {
@@ -92,6 +97,10 @@
             "nullable": true
           },
           "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
             "type": "string",
             "nullable": true
           }

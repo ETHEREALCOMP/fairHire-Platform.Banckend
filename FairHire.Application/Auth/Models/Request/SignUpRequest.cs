@@ -9,4 +9,6 @@ public sealed record SignUpRequest
     public required string ConfPassword { get; set; }
 
     public required string Name { get; set; }
+
+    public required string Role { get; set; }
 }
