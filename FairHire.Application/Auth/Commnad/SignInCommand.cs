@@ -20,22 +20,6 @@ public sealed class SignInCommand(JwtService jwtService, UserManager<User> userM
 
         var roles = await userManager.GetRolesAsync(user);
 
-        // Обрана роль (опційно). Підтверджуємо, що користувач справді має її.
-        string? activeRole = null;
-        if (!string.IsNullOrWhiteSpace(request.DesiredRole))
-        {
-            if (!roles.Contains(request.DesiredRole, StringComparer.OrdinalIgnoreCase))
-                throw new InvalidOperationException("Requested role is not assigned to the user.");
-
-            activeRole = roles.First(r => string.Equals(r, request.DesiredRole, StringComparison.OrdinalIgnoreCase));
-        }
-        else
-        {
-            // Політика дефолту: company має пріоритет, інакше developer (налаштуй під себе)
-            activeRole = roles.Contains("company", StringComparer.OrdinalIgnoreCase) ? "company" :
-                         roles.Contains("developer", StringComparer.OrdinalIgnoreCase) ? "developer" : null;
-        }
-
-        return jwtService.IssueToken(user.Id, user.Email!, roles, activeRole);
+        return jwtService.IssueToken(user.Id, user.Email!, roles);
     }
 }

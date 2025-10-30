@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FairHire.Infrastructure.Postgres.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251029142202_AddRole")]
-    partial class AddRole
+    [Migration("20251030094533_UpdateUser")]
+    partial class UpdateUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -124,6 +124,9 @@ namespace FairHire.Infrastructure.Postgres.Migrations
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
+
+                    b.PrimitiveCollection<string[]>("Skills")
+                        .HasColumnType("text[]");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
@@ -283,7 +286,7 @@ namespace FairHire.Infrastructure.Postgres.Migrations
                         .IsRequired();
 
                     b.HasOne("FairHire.Domain.User", "User")
-                        .WithMany()
+                        .WithMany("TestTasks")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -345,6 +348,11 @@ namespace FairHire.Infrastructure.Postgres.Migrations
                 });
 
             modelBuilder.Entity("FairHire.Domain.Company", b =>
+                {
+                    b.Navigation("TestTasks");
+                });
+
+            modelBuilder.Entity("FairHire.Domain.User", b =>
                 {
                     b.Navigation("TestTasks");
                 });

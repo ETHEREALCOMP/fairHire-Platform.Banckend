@@ -122,6 +122,9 @@ namespace FairHire.Infrastructure.Postgres.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
+                    b.PrimitiveCollection<string[]>("Skills")
+                        .HasColumnType("text[]");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
 
@@ -280,7 +283,7 @@ namespace FairHire.Infrastructure.Postgres.Migrations
                         .IsRequired();
 
                     b.HasOne("FairHire.Domain.User", "User")
-                        .WithMany()
+                        .WithMany("TestTasks")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -342,6 +345,11 @@ namespace FairHire.Infrastructure.Postgres.Migrations
                 });
 
             modelBuilder.Entity("FairHire.Domain.Company", b =>
+                {
+                    b.Navigation("TestTasks");
+                });
+
+            modelBuilder.Entity("FairHire.Domain.User", b =>
                 {
                     b.Navigation("TestTasks");
                 });

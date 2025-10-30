@@ -20,19 +20,20 @@ public sealed class SignUpCommand(UserManager<User> userManager)
             Id = Guid.NewGuid(),
             Name = request.Name,
             UserName = request.Email, // логін по email
-            Email = request.Email
+            Email = request.Email,
+            Skills = request.Skills,
+            TestTasks = request.TestTasks
         };
 
         var create = await userManager.CreateAsync(user, request.Password);
         if (!create.Succeeded)
             throw new InvalidOperationException(string.Join("; ", create.Errors.Select(e => e.Description)));
 
-        // Бізнес-логіка: за замовчуванням developer (company — після апруву)
         var roleToAssign = (request.Role?.Trim().ToLowerInvariant()) switch
         {
             "company" => "company",
             "dev" => "dev",
-            _ => "dev" // дефолт, якщо не передали або передали сміття
+            _ => throw new NotImplementedException(),
         };
 
         var addRole = await userManager.AddToRoleAsync(user, roleToAssign);

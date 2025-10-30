@@ -1,4 +1,5 @@
 ﻿using FairHire.Application.Auth.Commnad;
+using FairHire.Application.Auth.Query;
 using FairHire.Application.Feature.TestTaskFeature.Commands;
 using FairHire.Application.Feature.TestTaskFeature.Queries;
 using FairHire.Application.Jwt;
@@ -24,6 +25,7 @@ public static class DependencyInjection
         services.AddScoped<SignInCommand>();
         services.AddScoped<SignUpCommand>();
         services.AddScoped<SignOutCommand>();
+        services.AddScoped<EditUserCommand>();
         services.AddScoped<CreateTestTaskCommand>();
         services.AddScoped<UpdateTestTaskCommand>();
         services.AddScoped<DeleteTestTaskCommand>();
@@ -35,6 +37,7 @@ public static class DependencyInjection
     {
         services.AddScoped<GetAllTestTaskQuery>();
         services.AddScoped<GetByIdTestTaskQuery>();
+        services.AddScoped<GetUserData>();
 
         return services;
     }

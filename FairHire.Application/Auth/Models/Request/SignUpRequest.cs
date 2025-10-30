@@ -1,4 +1,6 @@
-﻿namespace FairHire.Application.Auth.Models.Request;
+﻿using FairHire.Domain;
+
+namespace FairHire.Application.Auth.Models.Request;
 
 public sealed record SignUpRequest
 {
@@ -11,4 +13,8 @@ public sealed record SignUpRequest
     public required string Name { get; set; }
 
     public required string Role { get; set; }
+
+    public List<string>? Skills { get; set; } = [];
+
+    public List<TestTask>? TestTasks { get; set; } = [];
 }

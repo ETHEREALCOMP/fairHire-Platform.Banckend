@@ -8,7 +8,7 @@ namespace FairHire.Application.Jwt;
 
 public class JwtService(IConfiguration configuration)
 {
-    public string IssueToken(Guid userId, string email, IEnumerable<string> roles, string? activeRole)
+    public string IssueToken(Guid userId, string email, IEnumerable<string> roles)
     {
         var jwt = configuration.GetSection("Jwt");
         var key = jwt["Key"] ?? throw new InvalidOperationException("Missing Jwt:Key");
@@ -29,10 +29,6 @@ public class JwtService(IConfiguration configuration)
         // Рольові клейми (по одному на роль)
         foreach (var r in roles.Distinct(StringComparer.OrdinalIgnoreCase))
             claims.Add(new Claim(ClaimTypes.Role, r));
-
-        // Активна роль для сесії (кастомний клейм)
-        if (!string.IsNullOrWhiteSpace(activeRole))
-            claims.Add(new Claim("active_role", activeRole));
 
         var now = DateTime.UtcNow;
         var token = new JwtSecurityToken(

@@ -21,8 +21,4 @@
     <ProjectReference Include="..\FairHire.Infrastructure.Postgres\FairHire.Infrastructure.Postgres.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Auth\Models\Responsess\" />
-  </ItemGroup>
-
 </Project>
