@@ -15,6 +15,4 @@ public sealed record SignUpRequest
     public required string Role { get; set; }
 
     public List<string>? Skills { get; set; } = [];
-
-    public List<TestTask>? TestTasks { get; set; } = [];
 }

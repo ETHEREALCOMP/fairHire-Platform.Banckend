@@ -37,7 +37,7 @@ public static class DependencyInjection
     {
         services.AddScoped<GetAllTestTaskQuery>();
         services.AddScoped<GetByIdTestTaskQuery>();
-        services.AddScoped<GetUserData>();
+        services.AddScoped<GetUserDataQuery>();
 
         return services;
     }

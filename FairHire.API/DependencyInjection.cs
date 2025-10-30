@@ -2,6 +2,7 @@
 using FairHire.Infrastructure.Postgres;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 
 namespace FairHire.API;
@@ -17,6 +18,7 @@ public static class DependencyInjection
         services.AddPostgresInfrastructure(configuration);
         services.AddApplication(configuration);
         services.AddAuth(configuration);
+        services.AddHttpContextAccessor();
     }
 
     private static void AddAuth(this IServiceCollection services,
@@ -29,6 +31,8 @@ public static class DependencyInjection
             options.RequireHttpsMetadata = true; // true in production
             options.TokenValidationParameters = new TokenValidationParameters
             {
+                RoleClaimType = ClaimTypes.Role,
+                NameClaimType = ClaimTypes.NameIdentifier,
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"])),
                 ValidateIssuer = true,
@@ -38,6 +42,13 @@ public static class DependencyInjection
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.FromMinutes(2)
             };
+        });
+
+        services.AddAuthorization(o =>
+        {
+            o.AddPolicy("developer", p => p.RequireRole("developer"));
+            o.AddPolicy("company", p => p.RequireRole("company"));
+            o.AddPolicy("devOrCompany", p => p.RequireRole("developer", "company")); // OR
         });
     }
 }

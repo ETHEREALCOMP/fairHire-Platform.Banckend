@@ -19,5 +19,6 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.MapAuthEndpoints();
+app.MapUserEndpoints();
 
 app.Run();
