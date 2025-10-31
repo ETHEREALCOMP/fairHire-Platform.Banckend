@@ -1,4 +1,5 @@
-﻿using FairHire.Application;
+﻿using FairHire.API.Options;
+using FairHire.Application;
 using FairHire.Infrastructure.Postgres;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -19,6 +20,11 @@ public static class DependencyInjection
         services.AddApplication(configuration);
         services.AddAuth(configuration);
         services.AddHttpContextAccessor();
+        services.AddCors();
+        services.AddSingleton(new RequestLimitsOptions
+        {
+            ApiMaxBodyBytes = 2L * 1024 * 1024
+        });
     }
 
     private static void AddAuth(this IServiceCollection services,
