@@ -2,9 +2,9 @@
 
 public sealed class TestTask
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
-    public required string Titel { get; set; }
+    public required string Title { get; set; }
 
     public string? Description { get; set; }
 

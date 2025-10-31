@@ -1,5 +1,5 @@
 ﻿using FairHire.Application.Auth.Models.Request;
-using FairHire.Application.Auth.Query;
+using FairHire.Application.Base.Response;
 using FairHire.Domain;
 using Microsoft.AspNetCore.Identity;
 
@@ -7,7 +7,7 @@ namespace FairHire.Application.Auth.Commnad
 {
     public sealed class EditUserCommand(UserManager<User> userManager)
     {
-        public async Task<Guid> ExecuteAsync(Guid userId, EditUserDataRequest request, CancellationToken ct)
+        public async Task<BaseResponse> ExecuteAsync(Guid userId, EditUserDataRequest request, CancellationToken ct)
         {
             var user = await userManager.FindByIdAsync(userId.ToString());
             if (user is null)
@@ -28,7 +28,7 @@ namespace FairHire.Application.Auth.Commnad
 
             await userManager.UpdateAsync(user);
 
-            return user.Id;
+            return new() { Id = user.Id };
         }
     }
 }

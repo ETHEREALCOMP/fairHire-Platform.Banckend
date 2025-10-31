@@ -1,4 +1,5 @@
 ﻿using FairHire.Application.Auth.Models.Request;
+using FairHire.Application.Base.Response;
 using FairHire.Domain;
 using Microsoft.AspNetCore.Identity;
 
@@ -6,7 +7,7 @@ namespace FairHire.Application.Auth.Commnad;
 
 public sealed class SignUpCommand(UserManager<User> userManager)
 {
-    public async Task<Guid> ExecuteAsync(SignUpRequest request, CancellationToken ct)
+    public async Task<BaseResponse> ExecuteAsync(SignUpRequest request, CancellationToken ct)
     {
         // Implementation for sign-up command
         if (request.Password != request.ConfPassword)
@@ -39,6 +40,6 @@ public sealed class SignUpCommand(UserManager<User> userManager)
         if (!addRole.Succeeded)
             throw new InvalidOperationException(string.Join("; ", addRole.Errors.Select(e => e.Description)));
 
-        return user.Id;
+        return new() { Id = user.Id };
     }
 }
