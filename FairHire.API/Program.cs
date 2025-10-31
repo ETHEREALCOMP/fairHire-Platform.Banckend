@@ -1,6 +1,8 @@
 using FairHire.API;
 using FairHire.API.Enpoints;
 using FairHire.API.Middleware;
+using FairHire.Infrastructure.Postgres;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,8 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 await app.SeedAsync();
+
+ApplyMigrations(app);
 
 app.UseCors();
 
@@ -29,3 +33,25 @@ app.MapUserEndpoints();
 app.MapTestTaskEndpoints();
 
 app.Run();
+
+
+static void ApplyMigrations(WebApplication app)
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+        // Check and apply pending migrations
+        var pendingMigrations = dbContext.Database.GetPendingMigrations();
+        if (pendingMigrations.Any())
+        {
+            Console.WriteLine("Applying pending migrations...");
+            dbContext.Database.Migrate();
+            Console.WriteLine("Migrations applied successfully.");
+        }
+        else
+        {
+            Console.WriteLine("No pending migrations found.");
+        }
+    }
+}

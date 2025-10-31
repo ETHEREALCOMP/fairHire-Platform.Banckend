@@ -26,5 +26,6 @@ public sealed class AppDbContext: IdentityDbContext<User, IdentityRole<Guid>, Gu
             b.Property(u => u.UserName).HasMaxLength(100);
             b.HasIndex(u => u.NormalizedEmail).HasDatabaseName("IX_User_NormalizedEmail");
         });
+
     }
 }
