@@ -1,18 +1,50 @@
-﻿version: '3.8' 
+version: "3.9"
 
 services:
   db:
-    image: postgres:latest
+    image: postgres:15-alpine
     container_name: fair_hire_db
     restart: always
     environment:
-      POSTGRES_USER: sa
-      POSTGRES_PASSWORD: pwd 
-      POSTGRES_DB: FairHireDB 
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
       - "5433:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql 
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  db-migrator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: db-migrator
+    container_name: fairhire-migrator-service
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: api
+    container_name: fairhire-api-service
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      db-migrator:
+        condition: service_completed_successfully
 
 volumes:
   postgres_data:
