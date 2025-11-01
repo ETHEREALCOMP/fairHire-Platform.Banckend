@@ -15,13 +15,14 @@ public sealed class GetUserDataQuery(UserManager<User> userManager,
 
         var data = await context.Users.Where(x => x.Id == user.Id)
             .Include(x => x.TestTasks)
-            .Select(x=> new UserDataResponse {
+            .Select(x => new UserDataResponse {
                 Email = x.Email,
                 Name = x.Name,
                 Skills = x.Skills,
                 TestTasks = x.TestTasks
 
             })
+            .AsNoTracking()
             .FirstOrDefaultAsync(ct);
 
 
