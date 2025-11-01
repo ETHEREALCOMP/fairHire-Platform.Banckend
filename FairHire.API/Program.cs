@@ -21,8 +21,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 // http or https://localhost:post/swagger/index.html for testing the API
-app.UseSwagger();
-app.UseSwaggerUI();
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 //Middleware
 app.UseMiddleware<GlobalExceptionMiddleware>();
