@@ -4,9 +4,9 @@ using FairHire.Application.Jwt;
 using FairHire.Domain;
 using Microsoft.AspNetCore.Identity;
 
-namespace FairHire.Application.Auth.Commnad;
+namespace FairHire.Application.Auth.Commnad.Users;
 
-public sealed class SignInCommand(JwtService jwtService, UserManager<User> userManager)
+public sealed class UserSignInCommand(JwtService jwtService, UserManager<User> userManager)
 {
     public async Task<SignInResponse> ExecuteAsync(SignInRequest request, CancellationToken ct)
     {

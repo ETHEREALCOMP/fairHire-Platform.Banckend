@@ -1,8 +1,8 @@
 ﻿using FairHire.Domain;
 
-namespace FairHire.Application.Auth.Models.Request;
+namespace FairHire.Application.Auth.Models.Request.Users;
 
-public sealed record SignUpRequest
+public sealed record UserSignUpRequest
 {
     public required string Email { get; set; }
 

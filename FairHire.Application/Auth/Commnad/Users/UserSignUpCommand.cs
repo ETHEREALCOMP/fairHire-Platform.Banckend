@@ -1,13 +1,13 @@
-﻿using FairHire.Application.Auth.Models.Request;
+﻿using FairHire.Application.Auth.Models.Request.Users;
 using FairHire.Application.Base.Response;
 using FairHire.Domain;
 using Microsoft.AspNetCore.Identity;
 
-namespace FairHire.Application.Auth.Commnad;
+namespace FairHire.Application.Auth.Commnad.Users;
 
-public sealed class SignUpCommand(UserManager<User> userManager)
+public sealed class UserSignUpCommand(UserManager<User> userManager)
 {
-    public async Task<BaseResponse> ExecuteAsync(SignUpRequest request, CancellationToken ct)
+    public async Task<BaseResponse> ExecuteAsync(UserSignUpRequest request, CancellationToken ct)
     {
         // Implementation for sign-up command
         if (request.Password != request.ConfPassword)

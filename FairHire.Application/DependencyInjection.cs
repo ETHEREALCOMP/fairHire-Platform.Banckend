@@ -1,4 +1,6 @@
 ﻿using FairHire.Application.Auth.Commnad;
+using FairHire.Application.Auth.Commnad.Companies;
+using FairHire.Application.Auth.Commnad.Users;
 using FairHire.Application.Auth.Query;
 using FairHire.Application.Feature.TestTaskFeature.Commands;
 using FairHire.Application.Feature.TestTaskFeature.Queries;
@@ -22,10 +24,15 @@ public static class DependencyInjection
 
     private static IServiceCollection AddCommand(this IServiceCollection services)
     {
-        services.AddScoped<SignInCommand>();
-        services.AddScoped<SignUpCommand>();
         services.AddScoped<SignOutCommand>();
+
+        services.AddScoped<UserSignInCommand>();
+        services.AddScoped<UserSignUpCommand>();
         services.AddScoped<EditUserCommand>();
+
+        services.AddScoped<CompanySignInCommand>();
+        services.AddScoped<CompanySignUpCommand>();
+
         services.AddScoped<CreateTestTaskCommand>();
         services.AddScoped<UpdateTestTaskCommand>();
         services.AddScoped<DeleteTestTaskCommand>();

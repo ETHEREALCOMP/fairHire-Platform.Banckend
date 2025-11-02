@@ -1,4 +1,4 @@
-﻿using FairHire.Application.Auth.Models.Responsess;
+﻿using FairHire.Application.Auth.Models.Response.Users;
 using FairHire.Domain;
 using FairHire.Infrastructure.Postgres;
 using Microsoft.AspNetCore.Identity;

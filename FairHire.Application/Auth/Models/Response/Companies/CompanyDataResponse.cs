@@ -1,8 +1,8 @@
 ﻿using FairHire.Domain;
 
-namespace FairHire.Application.Auth.Models.Responsess;
+namespace FairHire.Application.Auth.Models.Response.Companies;
 
-public sealed record UserDataResponse
+public sealed record CompanyDataResponse
 {
     public required string Email { get; set; }
 

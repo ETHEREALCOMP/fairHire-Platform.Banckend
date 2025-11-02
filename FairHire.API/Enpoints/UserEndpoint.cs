@@ -1,5 +1,5 @@
-﻿using FairHire.Application.Auth.Commnad;
-using FairHire.Application.Auth.Models.Request;
+﻿using FairHire.Application.Auth.Commnad.Users;
+using FairHire.Application.Auth.Models.Request.Users;
 using FairHire.Application.Auth.Query;
 
 namespace FairHire.API.Enpoints

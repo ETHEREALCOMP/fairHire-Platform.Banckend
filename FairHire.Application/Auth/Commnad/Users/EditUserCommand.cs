@@ -1,9 +1,9 @@
-﻿using FairHire.Application.Auth.Models.Request;
+﻿using FairHire.Application.Auth.Models.Request.Users;
 using FairHire.Application.Base.Response;
 using FairHire.Domain;
 using Microsoft.AspNetCore.Identity;
 
-namespace FairHire.Application.Auth.Commnad
+namespace FairHire.Application.Auth.Commnad.Users
 {
     public sealed class EditUserCommand(UserManager<User> userManager)
     {

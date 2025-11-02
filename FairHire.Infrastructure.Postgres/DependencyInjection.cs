@@ -28,6 +28,5 @@ public static class DependencyInjection
             options.Password.RequiredLength = 6;
         }).AddRoles<IdentityRole<Guid>>()
         .AddEntityFrameworkStores<AppDbContext>();
-
     }
 }
