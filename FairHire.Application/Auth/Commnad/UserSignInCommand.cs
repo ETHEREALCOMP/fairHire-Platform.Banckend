@@ -7,8 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FairHire.Application.Auth.Commnad;
 
-public sealed class UserSignInCommand(JwtService jwtService, UserManager<User> userManager,
-    SignInManager<User> signInManager, AppDbContext context)
+public sealed class UserSignInCommand(JwtService jwtService, UserManager<User> userManager)
 {
     public async Task<SignInResponse> ExecuteAsync(SignInRequest request, CancellationToken ct)
     {
