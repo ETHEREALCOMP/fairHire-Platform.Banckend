@@ -5,14 +5,15 @@ public sealed class TestTask
     public Guid Id { get; set; } = Guid.NewGuid();
 
     public required string Title { get; set; }
-
     public string? Description { get; set; }
+    public DateTime? DueDateUtc { get; set; }
+    public string Status { get; set; } = "New"; // New/InProgress/Done/Rejected
 
-    public Guid UserId { get; set; }
+    // Хто створив (компанія)
+    public Guid CreatedByCompanyId { get; set; }      // FK -> CompanyProfile.UserId
+    public CompanyProfile CreatedByCompany { get; set; } = default!;
 
-    public User? User { get; set; }
-
-    public Guid CompanyId { get; set; }
-
-    public Company? Company { get; set; }
+    // Кому призначено (дев-юзер)
+    public Guid? AssignedToUserId { get; set; }        // FK -> AspNetUsers.Id
+    public User? AssignedToUser { get; set; }
 }

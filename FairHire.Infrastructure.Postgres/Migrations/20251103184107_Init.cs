@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -8,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FairHire.Infrastructure.Postgres.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,9 +31,8 @@ namespace FairHire.Infrastructure.Postgres.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Skills = table.Column<List<string>>(type: "text[]", nullable: true),
-                    UserName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
+                    Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
+                    UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -52,23 +50,6 @@ namespace FairHire.Infrastructure.Postgres.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Companies",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Password = table.Column<string>(type: "text", nullable: false),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    UserEmail = table.Column<string>(type: "text", nullable: false),
-                    Address = table.Column<string>(type: "text", nullable: true),
-                    Website = table.Column<string>(type: "text", nullable: true),
-                    UserRole = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Companies", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -178,30 +159,70 @@ namespace FairHire.Infrastructure.Postgres.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CompanyProfiles",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
+                    Address = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true),
+                    Website = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CompanyProfiles", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_CompanyProfiles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeveloperProfiles",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Skills = table.Column<string>(type: "jsonb", nullable: false, defaultValueSql: "'[]'::jsonb")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeveloperProfiles", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_DeveloperProfiles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TestTasks",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Title = table.Column<string>(type: "text", nullable: false),
+                    Title = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CompanyId = table.Column<Guid>(type: "uuid", nullable: false)
+                    DueDateUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Status = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
+                    CreatedByCompanyId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AssignedToUserId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TestTasks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TestTasks_AspNetUsers_UserId",
-                        column: x => x.UserId,
+                        name: "FK_TestTasks_AspNetUsers_AssignedToUserId",
+                        column: x => x.AssignedToUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TestTasks_Companies_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Companies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_TestTasks_CompanyProfiles_CreatedByCompanyId",
+                        column: x => x.CreatedByCompanyId,
+                        principalTable: "CompanyProfiles",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -231,7 +252,7 @@ namespace FairHire.Infrastructure.Postgres.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_NormalizedEmail",
+                name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
 
@@ -242,14 +263,24 @@ namespace FairHire.Infrastructure.Postgres.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_TestTasks_CompanyId",
-                table: "TestTasks",
-                column: "CompanyId");
+                name: "IX_CompanyProfiles_Name",
+                table: "CompanyProfiles",
+                column: "Name");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TestTasks_UserId",
+                name: "IX_TestTasks_AssignedToUserId",
                 table: "TestTasks",
-                column: "UserId");
+                column: "AssignedToUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TestTasks_CreatedByCompanyId",
+                table: "TestTasks",
+                column: "CreatedByCompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TestTasks_Status_DueDateUtc",
+                table: "TestTasks",
+                columns: new[] { "Status", "DueDateUtc" });
         }
 
         /// <inheritdoc />
@@ -271,16 +302,19 @@ namespace FairHire.Infrastructure.Postgres.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "DeveloperProfiles");
+
+            migrationBuilder.DropTable(
                 name: "TestTasks");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "CompanyProfiles");
 
             migrationBuilder.DropTable(
-                name: "Companies");
+                name: "AspNetUsers");
         }
     }
 }

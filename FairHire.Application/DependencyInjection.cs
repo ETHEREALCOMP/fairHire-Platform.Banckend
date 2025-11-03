@@ -1,10 +1,10 @@
 ﻿using FairHire.Application.Auth.Commnad;
-using FairHire.Application.Auth.Commnad.Companies;
-using FairHire.Application.Auth.Commnad.Users;
 using FairHire.Application.Auth.Query;
 using FairHire.Application.Feature.TestTaskFeature.Commands;
 using FairHire.Application.Feature.TestTaskFeature.Queries;
 using FairHire.Application.Jwt;
+using FairHire.Domain;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,6 +20,8 @@ public static class DependencyInjection
         services.AddCommand();
         services.AddQuery();
         services.AddSingleton<JwtService>();
+        services.AddScoped<SignInManager<User>>();
+
     }
 
     private static IServiceCollection AddCommand(this IServiceCollection services)
@@ -29,9 +31,6 @@ public static class DependencyInjection
         services.AddScoped<UserSignInCommand>();
         services.AddScoped<UserSignUpCommand>();
         services.AddScoped<EditUserCommand>();
-
-        services.AddScoped<CompanySignInCommand>();
-        services.AddScoped<CompanySignUpCommand>();
 
         services.AddScoped<CreateTestTaskCommand>();
         services.AddScoped<UpdateTestTaskCommand>();
