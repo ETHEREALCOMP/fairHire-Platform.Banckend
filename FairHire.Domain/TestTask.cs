@@ -7,7 +7,7 @@ public sealed class TestTask
     public required string Title { get; set; }
     public string? Description { get; set; }
     public DateTime? DueDateUtc { get; set; }
-    public string Status { get; set; } = "New"; // New/InProgress/Done/Rejected
+    public string Status { get; set; } = "New"; // New/InProgress/Done/Rejected/Updated
 
     // Хто створив (компанія)
     public Guid CreatedByCompanyId { get; set; }      // FK -> CompanyProfile.UserId

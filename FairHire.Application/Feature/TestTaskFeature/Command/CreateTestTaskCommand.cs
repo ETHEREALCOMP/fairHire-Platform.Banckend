@@ -35,7 +35,7 @@ public sealed class CreateTestTaskCommand(AppDbContext context, UserManager<User
         if (!isCompany)
             throw new ValidationException("Creator user does not have 'Company' role.");
 
-        // 4) Якщо призначаємо девелопера — перевір існування та роль Developer (без регістру)
+        // 4) Якщо призначаємо девелопера — перевірити існування та роль Developer (без регістру)
         if (request.AssignedToUserId is Guid devId)
         {
             var assignee = await context.Users
