@@ -12,6 +12,6 @@ public static class TestTaskEnpoint
         {
             var task = await command.ExecuteAsync(request, ct);
             return Results.Ok(task);
-        });
+        }).RequireAuthorization("company");
     }
 }
