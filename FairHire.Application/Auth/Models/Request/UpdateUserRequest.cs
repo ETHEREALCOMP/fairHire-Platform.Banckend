@@ -2,7 +2,7 @@
 
 namespace FairHire.Application.Auth.Models.Request;
 
-public sealed record EditUserRequest
+public sealed record UpdateUserRequest
 {
     // базові поля User
     [MaxLength(256)] public string? Name { get; init; }

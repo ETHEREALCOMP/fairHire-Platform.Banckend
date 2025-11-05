@@ -75,7 +75,7 @@ public sealed class GuardMiddleware(RequestDelegate next,
         if (m is "OPTIONS" or "HEAD") return true;
 
         // приклади вузьких політик
-        if (path.ToString().Contains("/edit")) return m is "PATCH";
+        if (path.ToString().Contains("/update")) return m is "PATCH";
         if (path.ToString().Contains("/delete")) return m is "DELETE";
 
         // дефолтна політика для API: тільки GET/POST

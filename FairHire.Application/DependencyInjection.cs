@@ -30,7 +30,7 @@ public static class DependencyInjection
 
         services.AddScoped<UserSignInCommand>();
         services.AddScoped<UserSignUpCommand>();
-        services.AddScoped<EditUserCommand>();
+        services.AddScoped<UpdateUserCommand>();
 
         services.AddScoped<CreateTestTaskCommand>();
         services.AddScoped<UpdateTestTaskCommand>();

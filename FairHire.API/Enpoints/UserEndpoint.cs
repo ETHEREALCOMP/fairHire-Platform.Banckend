@@ -9,19 +9,19 @@ namespace FairHire.API.Enpoints
     {
         public static void MapUserEndpoints(this IEndpointRouteBuilder app) 
         {
-            app.MapPatch("/user/edit/{userId:guid}", async (Guid userId, EditUserCommand command,
-            EditUserRequest request, CancellationToken ct) =>
+            app.MapPatch("/user/update/{userId:guid}", async (Guid userId, UpdateUserCommand command,
+            UpdateUserRequest request, CancellationToken ct) =>
             {
-                await command.ExecuteAsync(userId, request, ct);
-                return Results.Ok();
-            }).RequireAuthorization(policy => policy.RequireRole("Developer", "Company"));
+                var id = await command.ExecuteAsync(userId, request, ct);
+                return Results.Ok(id);
+            }).RequireAuthorization(policy => policy.RequireRole("developer", "company"));//іноді ламається і треаб переписати з малої
 
             app.MapGet("/user/get/{userId:guid}", async(Guid userId,
                 GetUserDataQuery query, CancellationToken ct) => 
             {
                 var res = await query.ExecuteAsync(userId, ct);
                 return Results.Ok(res);
-            }).RequireAuthorization(policy => policy.RequireRole("Developer", "Company"));
+            }).RequireAuthorization(policy => policy.RequireRole("developer", "company"));//іноді ламається і треаб переписати з малої
         }
     }
 }

@@ -11,9 +11,9 @@ using System.Xml.Linq;
 
 namespace FairHire.Application.Auth.Commnad
 {
-    public sealed class EditUserCommand(UserManager<User> userManager, AppDbContext context)
+    public sealed class UpdateUserCommand(UserManager<User> userManager, AppDbContext context)
     {
-        public async Task<BaseResponse> ExecuteAsync(Guid userId, EditUserRequest request, CancellationToken ct)
+        public async Task<BaseResponse> ExecuteAsync(Guid userId, UpdateUserRequest request, CancellationToken ct)
         {
             // базові перевірки
             if (userId == Guid.Empty)
@@ -49,7 +49,7 @@ namespace FairHire.Application.Auth.Commnad
                 user.CompanyProfile.Website = string.IsNullOrWhiteSpace(request.Website) ? null : request.Website.Trim();
 
             }
-            // оновити DeveloperProfile (якщо є роль Developer)
+            // оновити DeveloperProfile в іншому випадку
             else
             {
                 if (user.DeveloperProfile is null)
