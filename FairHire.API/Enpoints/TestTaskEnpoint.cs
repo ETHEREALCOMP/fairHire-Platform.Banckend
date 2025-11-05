@@ -14,7 +14,7 @@ public static class TestTaskEnpoint
             return Results.Ok(task);
         }).RequireAuthorization("Company");
 
-        app.MapPatch("/test-task/edit/{taskId:guid}", async (Guid taskId, UpdateTestTaskCommand command, 
+        app.MapPatch("/test-task/update/{taskId:guid}", async (Guid taskId, UpdateTestTaskCommand command, 
             UpdateTestTaskRequest request, CancellationToken ct) => 
         {
             var task = await command.ExecuteAsync(taskId, request, ct);

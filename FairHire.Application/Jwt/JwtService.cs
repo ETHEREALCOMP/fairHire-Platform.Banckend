@@ -28,7 +28,7 @@ public class JwtService(IConfiguration configuration)
 
         // Рольові клейми (по одному на роль)
         foreach (var r in roles.Distinct(StringComparer.OrdinalIgnoreCase))
-            claims.Add(new Claim(ClaimTypes.Role, r));
+            claims.Add(new Claim(ClaimTypes.Role, r.ToLowerInvariant()));
 
         var now = DateTime.UtcNow;
         var token = new JwtSecurityToken(

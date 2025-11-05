@@ -1,7 +1,6 @@
 ﻿using FairHire.Application.Auth.Commnad;
 using FairHire.Application.Auth.Models.Request;
 using FairHire.Application.Auth.Query;
-using Microsoft.AspNetCore.Builder;
 
 namespace FairHire.API.Enpoints
 {
@@ -14,14 +13,15 @@ namespace FairHire.API.Enpoints
             {
                 var id = await command.ExecuteAsync(userId, request, ct);
                 return Results.Ok(id);
-            }).RequireAuthorization(policy => policy.RequireRole("developer", "company"));//іноді ламається і треаб переписати з малої
+            }).RequireAuthorization("devOrCompany");
+
 
             app.MapGet("/user/get/{userId:guid}", async(Guid userId,
                 GetUserDataQuery query, CancellationToken ct) => 
             {
                 var res = await query.ExecuteAsync(userId, ct);
                 return Results.Ok(res);
-            }).RequireAuthorization(policy => policy.RequireRole("developer", "company"));//іноді ламається і треаб переписати з малої
+            }).RequireAuthorization("devOrCompany");
         }
     }
 }

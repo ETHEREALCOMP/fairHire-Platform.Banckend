@@ -37,7 +37,6 @@ app.MapTestTaskEndpoints();
 
 app.Run();
 
-
 static void ApplyMigrations(WebApplication app)
 {
     using (var scope = app.Services.CreateScope())
