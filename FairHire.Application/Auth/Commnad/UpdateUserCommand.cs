@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Net;
-using System.Xml.Linq;
 
 namespace FairHire.Application.Auth.Commnad
 {
@@ -73,7 +71,7 @@ namespace FairHire.Application.Auth.Commnad
 
             await context.SaveChangesAsync(ct);
 
-            return new BaseResponse { Id = user.Id };
+            return new () { Id = user.Id };
         }
     }
 }
