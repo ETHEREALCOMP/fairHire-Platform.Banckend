@@ -38,7 +38,6 @@ public sealed class UpdateTestTaskCommand(AppDbContext context,
 
         await context.SaveChangesAsync();
 
-
         return new() { Id = task.Id };
     } 
 }

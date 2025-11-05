@@ -4,8 +4,6 @@ namespace FairHire.Application.Auth.Models.Request;
 
 public sealed record EditUserRequest
 {
-    [Required] public Guid UserId { get; init; }
-
     // базові поля User
     [MaxLength(256)] public string? Name { get; init; }
 

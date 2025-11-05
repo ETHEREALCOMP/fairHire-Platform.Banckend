@@ -30,11 +30,9 @@ public sealed class UserSignUpCommand(UserManager<User> userManager, AppDbContex
         var email = request.Email.Trim();
         var normalized = email.ToUpperInvariant();
 
-        if (await userManager.FindByEmailAsync(email) is not null)
-            throw new DuplicateNameException("User with this email already exists.");
-
-        if (await userManager.FindByNameAsync(email) is not null)
-            throw new DuplicateNameException("User with this username already exists.");
+        if (await userManager.FindByEmailAsync(email) is not null 
+            || await userManager.FindByNameAsync(email) is not null)
+            throw new DuplicateNameException("User with this email or username already exists.");
 
         // 3) Готуємо об’єкт User (з явною нормалізацією)
         var user = new User

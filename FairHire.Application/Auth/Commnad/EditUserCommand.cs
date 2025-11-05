@@ -1,37 +1,39 @@
 ﻿using FairHire.Application.Auth.Models.Request;
+using FairHire.Application.Base.Response;
 using FairHire.Domain;
 using FairHire.Infrastructure.Postgres;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
+using System.Net;
+using System.Xml.Linq;
 
 namespace FairHire.Application.Auth.Commnad
 {
     public sealed class EditUserCommand(UserManager<User> userManager, AppDbContext context)
     {
-        public async Task ExecuteAsync(Guid userId, EditUserRequest request, CancellationToken ct)
+        public async Task<BaseResponse> ExecuteAsync(Guid userId, EditUserRequest request, CancellationToken ct)
         {
             // базові перевірки
-            if (request.UserId == Guid.Empty)
+            if (userId == Guid.Empty)
                 throw new ValidationException("UserId is required.");
 
             var user = await context.Users
                 .Include(u => u.CompanyProfile)
                 .Include(u => u.DeveloperProfile)
-                .FirstOrDefaultAsync(u => u.Id == request.UserId, ct)
+                .FirstOrDefaultAsync(u => u.Id == userId, ct)
                 ?? throw new KeyNotFoundException("User not found.");
 
             // ролі
             var roles = await userManager.GetRolesAsync(user);
-            var isCompany = roles.Contains("Company");
-            var isDeveloper = roles.Contains("Developer");
 
             // оновити User
             if (!string.IsNullOrWhiteSpace(request.Name))
                 user.Name = request.Name.Trim();
 
             // оновити CompanyProfile (якщо є роль Company)
-            if (isCompany)
+            if (roles.Any(r => string.Equals(r, "Company", StringComparison.OrdinalIgnoreCase)))
             {
                 if (user.CompanyProfile is null)
                 {
@@ -42,18 +44,13 @@ namespace FairHire.Application.Auth.Commnad
                     };
                 }
 
-                if (request.CompanyName is not null)
-                    user.CompanyProfile.Name = string.IsNullOrWhiteSpace(request.CompanyName) ? user.CompanyProfile.Name : request.CompanyName.Trim();
+                user.CompanyProfile.Name = string.IsNullOrWhiteSpace(request.CompanyName) ? user.Name : request.CompanyName.Trim();
+                user.CompanyProfile.Address = string.IsNullOrWhiteSpace(request.Address) ? null : request.Address.Trim();
+                user.CompanyProfile.Website = string.IsNullOrWhiteSpace(request.Website) ? null : request.Website.Trim();
 
-                if (request.Address is not null)
-                    user.CompanyProfile.Address = string.IsNullOrWhiteSpace(request.Address) ? null : request.Address.Trim();
-
-                if (request.Website is not null)
-                    user.CompanyProfile.Website = string.IsNullOrWhiteSpace(request.Website) ? null : request.Website.Trim();
             }
-
             // оновити DeveloperProfile (якщо є роль Developer)
-            if (isDeveloper)
+            else
             {
                 if (user.DeveloperProfile is null)
                 {
@@ -75,6 +72,8 @@ namespace FairHire.Application.Auth.Commnad
             }
 
             await context.SaveChangesAsync(ct);
+
+            return new BaseResponse { Id = user.Id };
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using FairHire.Application.Auth.Commnad;
 using FairHire.Application.Auth.Models.Request;
 using FairHire.Application.Auth.Query;
+using Microsoft.AspNetCore.Builder;
 
 namespace FairHire.API.Enpoints
 {
@@ -13,14 +14,14 @@ namespace FairHire.API.Enpoints
             {
                 await command.ExecuteAsync(userId, request, ct);
                 return Results.Ok();
-            }).RequireAuthorization("developer");
+            }).RequireAuthorization(policy => policy.RequireRole("Developer", "Company"));
 
             app.MapGet("/user/get/{userId:guid}", async(Guid userId,
                 GetUserDataQuery query, CancellationToken ct) => 
             {
                 var res = await query.ExecuteAsync(userId, ct);
                 return Results.Ok(res);
-            }).RequireAuthorization("developer");
+            }).RequireAuthorization(policy => policy.RequireRole("Developer", "Company"));
         }
     }
 }
