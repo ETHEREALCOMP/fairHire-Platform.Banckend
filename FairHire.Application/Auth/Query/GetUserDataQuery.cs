@@ -9,7 +9,6 @@ namespace FairHire.Application.Auth.Query;
 
 public sealed class GetUserDataQuery(AppDbContext context, UserManager<User> userManager)
 {
-
     public async Task<GetUserDataResponse?> ExecuteAsync(Guid userId, CancellationToken ct)
     {
         var user = await context.Users

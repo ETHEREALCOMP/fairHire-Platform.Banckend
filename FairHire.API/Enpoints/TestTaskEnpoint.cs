@@ -1,5 +1,8 @@
 ﻿using FairHire.Application.Feature.TestTaskFeature.Commands;
 using FairHire.Application.Feature.TestTaskFeature.Models.Requests;
+using FairHire.Application.Feature.TestTaskFeature.Query;
+using FairHire.Domain;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace FairHire.API.Enpoints;
 
@@ -20,5 +23,12 @@ public static class TestTaskEnpoint
             var task = await command.ExecuteAsync(taskId, request, ct);
             return Results.Ok(task);
         }).RequireAuthorization("Company");
+
+        app.MapGet("/test-task/get/{taskId:guid}", async (Guid taskId,
+            GetByIdTestTaskQuery query, CancellationToken ct) =>
+        {
+            var res = await query.ExecuteAsync(taskId, ct);
+            return Results.Ok(res);
+        }).RequireAuthorization("devOrCompany");
     }
 }

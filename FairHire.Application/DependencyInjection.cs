@@ -2,6 +2,7 @@
 using FairHire.Application.Auth.Query;
 using FairHire.Application.Feature.TestTaskFeature.Commands;
 using FairHire.Application.Feature.TestTaskFeature.Queries;
+using FairHire.Application.Feature.TestTaskFeature.Query;
 using FairHire.Application.Jwt;
 using FairHire.Domain;
 using Microsoft.AspNetCore.Identity;
