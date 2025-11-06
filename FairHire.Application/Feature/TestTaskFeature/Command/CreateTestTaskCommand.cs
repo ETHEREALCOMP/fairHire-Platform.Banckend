@@ -25,6 +25,7 @@ public sealed class CreateTestTaskCommand(AppDbContext context, UserManager<User
             .FirstOrDefaultAsync(c => c.UserId == request.CreatedByCompanyId, ct)
             ?? throw new KeyNotFoundException("Company profile not found.");
 
+
         // 3) Якщо призначаємо девелопера — перевірити існування та роль Developer (без регістру)
         if (request.AssignedToUserId is Guid devId)
         {
@@ -52,7 +53,7 @@ public sealed class CreateTestTaskCommand(AppDbContext context, UserManager<User
             DueDateUtc = DateTime.UtcNow, // якщо у твоєму CreateTestTaskRequest це поле є; інакше можеш лишити null
             Status = "New",
             CreatedByCompanyId = request.CreatedByCompanyId,
-            AssignedToUserId = request.AssignedToUserId
+            AssignedToUserId = request.AssignedToUserId,
         };
 
         context.TestTasks.Add(task);

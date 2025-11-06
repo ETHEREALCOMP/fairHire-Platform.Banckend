@@ -8,7 +8,7 @@ namespace FairHire.API.Enpoints
     {
         public static void MapUserEndpoints(this IEndpointRouteBuilder app) 
         {
-            app.MapPatch("/user/update/{userId:guid}", async (Guid userId, UpdateUserCommand command,
+            app.MapPatch("/user{userId:guid}", async (Guid userId, UpdateUserCommand command,
             UpdateUserRequest request, CancellationToken ct) =>
             {
                 var id = await command.ExecuteAsync(userId, request, ct);
@@ -16,7 +16,7 @@ namespace FairHire.API.Enpoints
             }).RequireAuthorization("devOrCompany");
 
 
-            app.MapGet("/user/get/{userId:guid}", async(Guid userId,
+            app.MapGet("/user{userId:guid}", async(Guid userId,
                 GetUserDataQuery query, CancellationToken ct) => 
             {
                 var res = await query.ExecuteAsync(userId, ct);

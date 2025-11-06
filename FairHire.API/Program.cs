@@ -48,7 +48,7 @@ static void ApplyMigrations(WebApplication app)
         if (pendingMigrations.Any())
         {
             Console.WriteLine("Applying pending migrations...");
-            dbContext.Database.Migrate();
+            //dbContext.Database.Migrate();
             Console.WriteLine("Migrations applied successfully.");
         }
         else

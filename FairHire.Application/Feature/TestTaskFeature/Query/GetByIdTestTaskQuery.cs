@@ -13,7 +13,7 @@ public sealed class GetByIdTestTaskQuery(AppDbContext context, UserManager<User>
             .FirstOrDefaultAsync(u => u.Id == taskId, ct) ?? 
             throw new KeyNotFoundException($"Task with id: {taskId} was not found.");
 
-        return new GetByIdTestTaskResponse 
+        return new ()
         {
             Id = task.Id,
             Title = task.Title,
