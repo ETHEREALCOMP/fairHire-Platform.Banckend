@@ -10,11 +10,8 @@ public sealed class GetByIdTestTaskQuery(AppDbContext context, UserManager<User>
 {
     public async Task<GetByIdTestTaskResponse> ExecuteAsync(Guid taskId, CancellationToken ct) {
         var task = await context.TestTasks
-            .FirstOrDefaultAsync(u => u.Id == taskId, ct);
-        
-        if (task is null) return null;//додати exeption 
-
-
+            .FirstOrDefaultAsync(u => u.Id == taskId, ct) ?? 
+            throw new KeyNotFoundException($"Task with id: {taskId} was not found.");
 
         return new GetByIdTestTaskResponse 
         {

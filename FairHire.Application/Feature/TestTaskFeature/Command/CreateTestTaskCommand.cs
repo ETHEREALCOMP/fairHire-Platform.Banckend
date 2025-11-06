@@ -25,17 +25,7 @@ public sealed class CreateTestTaskCommand(AppDbContext context, UserManager<User
             .FirstOrDefaultAsync(c => c.UserId == request.CreatedByCompanyId, ct)
             ?? throw new KeyNotFoundException("Company profile not found.");
 
-        // 3) Перевір, що цей користувач дійсно має роль Company (без врахування регістру)
-        var companyUser = await context.Users
-            .FirstOrDefaultAsync(u => u.Id == request.CreatedByCompanyId, ct)
-            ?? throw new KeyNotFoundException("Company user not found.");
-
-        var companyRoles = await userManager.GetRolesAsync(companyUser);
-        var isCompany = companyRoles.Any(r => string.Equals(r, "Company", StringComparison.OrdinalIgnoreCase));
-        if (!isCompany)
-            throw new ValidationException("Creator user does not have 'Company' role.");
-
-        // 4) Якщо призначаємо девелопера — перевірити існування та роль Developer (без регістру)
+        // 3) Якщо призначаємо девелопера — перевірити існування та роль Developer (без регістру)
         if (request.AssignedToUserId is Guid devId)
         {
             var assignee = await context.Users
@@ -48,13 +38,13 @@ public sealed class CreateTestTaskCommand(AppDbContext context, UserManager<User
                 throw new ValidationException("Assignee user does not have 'Developer' role.");
         }
 
-        // 5) Антидубль по назві в межах компанії
+        // 4) Антидубль по назві в межах компанії
         var titleExists = await context.TestTasks.AsNoTracking()
             .AnyAsync(t => t.CreatedByCompanyId == request.CreatedByCompanyId && t.Title == normalizedTitle, ct);
         if (titleExists)
             throw new ValidationException("Task with the same title already exists for this company.");
 
-        // 6) Створити ентіті (DueDate — якщо прийде з реквесту; інакше залишити null)
+        // 5) Створити ентіті (DueDate — якщо прийде з реквесту; інакше залишити null)
         var task = new TestTask
         {
             Title = normalizedTitle,

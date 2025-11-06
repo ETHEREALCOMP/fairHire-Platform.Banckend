@@ -4,6 +4,7 @@ using FairHire.Domain;
 using FairHire.Infrastructure.Postgres;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace FairHire.Application.Auth.Query;
 
@@ -14,9 +15,8 @@ public sealed class GetUserDataQuery(AppDbContext context, UserManager<User> use
         var user = await context.Users
             .Include(u => u.CompanyProfile)
             .Include(u => u.DeveloperProfile)
-            .FirstOrDefaultAsync(u => u.Id == userId, ct);
-
-        if (user is null) return null;
+            .FirstOrDefaultAsync(u => u.Id == userId, ct) ??
+            throw new KeyNotFoundException($"User was not found."); ;
 
         var roles = await userManager.GetRolesAsync(user);
 
