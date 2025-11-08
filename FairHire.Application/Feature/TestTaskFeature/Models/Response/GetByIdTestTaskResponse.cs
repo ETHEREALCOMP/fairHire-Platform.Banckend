@@ -12,9 +12,7 @@ public sealed class GetByIdTestTaskResponse
 
     // Хто створив (компанія)
     public Guid CreatedByCompanyId { get; init; }      // FK -> CompanyProfile.UserId
-    public CompanyProfile CreatedByCompany { get; init; } = default!;
 
     // Кому призначено (дев-юзер)
     public Guid? AssignedToUserId { get; init; }        // FK -> AspNetUsers.Id
-    public User? AssignedToUser { get; init; }
 }

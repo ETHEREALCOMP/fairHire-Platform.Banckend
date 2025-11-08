@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FairHire.Infrastructure.Postgres.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251106134836_Init")]
+    [Migration("20251108115808_Init")]
     partial class Init
     {
         /// <inheritdoc />

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FairHire.Application.Feature.TestTaskFeature.Query;
 
-public sealed class GetByIdTestTaskQuery(AppDbContext context, UserManager<User> userManager)
+public sealed class GetByIdTestTaskQuery(AppDbContext context)
 {
     public async Task<GetByIdTestTaskResponse> ExecuteAsync(Guid taskId, CancellationToken ct) {
         var task = await context.TestTasks
@@ -20,10 +20,8 @@ public sealed class GetByIdTestTaskQuery(AppDbContext context, UserManager<User>
             Description = task.Description,
             DueDateUtc = task.DueDateUtc,
             Status = task.Status,
-            CreatedByCompany = task.CreatedByCompany,
             CreatedByCompanyId = task.CreatedByCompanyId,
-            AssignedToUserId = task.AssignedToUserId,
-            AssignedToUser = task.AssignedToUser
+            AssignedToUserId = task.AssignedToUserId
         };
     }
 }

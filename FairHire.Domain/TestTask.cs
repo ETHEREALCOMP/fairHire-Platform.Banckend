@@ -11,7 +11,7 @@ public sealed class TestTask
 
     // Хто створив (компанія)
     public Guid CreatedByCompanyId { get; set; }      // FK -> CompanyProfile.UserId
-    public CompanyProfile CreatedByCompany { get; set; } = default!;
+    public CompanyProfile? CreatedByCompany { get; set; }
 
     // Кому призначено (дев-юзер)
     public Guid? AssignedToUserId { get; set; }        // FK -> AspNetUsers.Id

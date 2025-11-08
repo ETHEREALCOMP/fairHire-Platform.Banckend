@@ -32,12 +32,12 @@ public sealed class CreateTestTaskCommand(
         if (callerId != request.CreatedByCompanyId)
             throw new ValidationException("You cannot create tasks for another company.");
 
-        // 3) Існує профіль компанії?
-        var companyProfileExists = await context.CompanyProfiles
+        // 3) Витягуєм профіль компанії і перевіряєм чи він існує?
+        var companyProfile = await context.CompanyProfiles
             .AsNoTracking()
-            .AnyAsync(c => c.UserId == request.CreatedByCompanyId, ct);
+            .FirstOrDefaultAsync(c => c.UserId == request.CreatedByCompanyId, ct);
 
-        if (!companyProfileExists)
+        if (companyProfile is null)
             throw new KeyNotFoundException("Company profile not found.");
 
         // 4) Якщо є виконавець — перевір існування та роль Developer
@@ -73,6 +73,9 @@ public sealed class CreateTestTaskCommand(
             AssignedToUserId = assigneeId
         };
 
+        // 7) Додаємо завдання до списку створення
+        companyProfile.CreatedTasks.Add(task);
+    
         context.TestTasks.Add(task);
         await context.SaveChangesAsync(ct);
 
