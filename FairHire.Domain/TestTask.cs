@@ -16,4 +16,6 @@ public sealed class TestTask
     // Кому призначено (дев-юзер)
     public Guid? AssignedToUserId { get; set; }        // FK -> AspNetUsers.Id
     public User? AssignedToUser { get; set; }
+
+    public bool IsDeleted { get; set; } = false; // Логічне видалення
 }

@@ -146,7 +146,7 @@ public sealed class GuardMiddleware(RequestDelegate next,
 
         var payload = new ProblemContract
         {
-            Type = status >= 500 ? "about:blank" : $"https://httpstatuses.io/{status}",
+            Type = $"https://httpstatuses.io/{status}",
             Title = title,
             Status = status,
             Detail = detail,

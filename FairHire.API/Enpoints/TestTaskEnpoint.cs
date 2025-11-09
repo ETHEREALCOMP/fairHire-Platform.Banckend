@@ -70,5 +70,23 @@ public static class TestTaskEnpoint
             return Results.Ok(result);
 
         }).RequireAuthorization("devOrCompany");
+
+        app.MapDelete("/test-task/{taskId:guid}", async (Guid taskId, ClaimsPrincipal user,
+            AppDbContext context, DeleteTestTaskCommand command, CancellationToken ct) =>
+        {
+            var callerIdStr = user.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!Guid.TryParse(callerIdStr, out var callerId))
+                return Results.Unauthorized();
+
+            var companyProfile = await context.CompanyProfiles.AsNoTracking()
+                .AnyAsync(c => c.UserId == callerId, ct);
+
+            if (!companyProfile)
+                return Results.Forbid();
+
+            await command.ExecuteAsync(callerId, taskId,  ct);
+
+            return Results.NoContent();
+        }).RequireAuthorization("Company");
     }
 }

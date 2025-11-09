@@ -97,5 +97,8 @@ public sealed class AppDbContext: IdentityDbContext<User, IdentityRole<Guid>, Gu
             e.HasIndex(t => t.AssignedToUserId);
             e.HasIndex(t => new { t.Status, t.DueDateUtc });
         });
+
+
+        b.Entity<TestTask>(e => {e.HasQueryFilter(t => !t.IsDeleted);}); //soft delete global filter
     }
 }

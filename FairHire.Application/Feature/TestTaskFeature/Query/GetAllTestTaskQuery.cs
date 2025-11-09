@@ -1,11 +1,7 @@
 ﻿using FairHire.Application.Feature.TestTaskFeature.Models.Response;
 using FairHire.Domain;
 using FairHire.Infrastructure.Postgres;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
 
 namespace FairHire.Application.Feature.TestTaskFeature.Queries;
 

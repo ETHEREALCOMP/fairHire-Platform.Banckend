@@ -52,7 +52,7 @@ public class GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExcep
 
         var payload = new
         {
-            type = status >= 500 ? "about:blank" : $"https://httpstatuses.io/{status}",
+            type = $"https://httpstatuses.io/{status}",
             title,
             status,
             detail = null as string, // у проді без деталей; у Dev віддати ex.Message
