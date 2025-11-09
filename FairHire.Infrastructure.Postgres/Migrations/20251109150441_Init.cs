@@ -202,6 +202,7 @@ namespace FairHire.Infrastructure.Postgres.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Title = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
+                    NormalizedTitle = table.Column<string>(type: "text", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
                     DueDateUtc = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Status = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),

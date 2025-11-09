@@ -7,4 +7,6 @@ public sealed record UpdateTestTaskRequest
     public string? Title { get; set; }
     
     public string? Description { get; set; }
+
+    public DateTime? DueDateUtc { get; set; }
 }

@@ -81,6 +81,9 @@ namespace FairHire.Infrastructure.Postgres.Migrations
                     b.Property<DateTime?>("DueDateUtc")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("NormalizedTitle")
+                        .HasColumnType("text");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(64)

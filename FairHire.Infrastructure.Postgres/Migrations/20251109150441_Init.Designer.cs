@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FairHire.Infrastructure.Postgres.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251108115808_Init")]
+    [Migration("20251109150441_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -83,6 +83,9 @@ namespace FairHire.Infrastructure.Postgres.Migrations
 
                     b.Property<DateTime?>("DueDateUtc")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("NormalizedTitle")
+                        .HasColumnType("text");
 
                     b.Property<string>("Status")
                         .IsRequired()
