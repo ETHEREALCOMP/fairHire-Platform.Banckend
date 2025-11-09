@@ -11,23 +11,21 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-await app.SeedAsync();
 
-ApplyMigrations(app);
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.Migrate();
+    await app.SeedAsync();
+}
 
 app.UseCors();
-
 app.UseAuthentication();
 app.UseAuthorization();
 
-// http or https://localhost:post/swagger/index.html for testing the API
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
-//Middleware
 app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseMiddleware<GuardMiddleware>();
 
@@ -36,24 +34,3 @@ app.MapUserEndpoints();
 app.MapTestTaskEndpoints();
 
 app.Run();
-
-static void ApplyMigrations(WebApplication app)
-{
-    using (var scope = app.Services.CreateScope())
-    {
-        var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-        // Check and apply pending migrations
-        var pendingMigrations = dbContext.Database.GetPendingMigrations();
-        if (pendingMigrations.Any())
-        {
-            Console.WriteLine("Applying pending migrations...");
-            dbContext.Database.Migrate();
-            Console.WriteLine("Migrations applied successfully.");
-        }
-        else
-        {
-            Console.WriteLine("No pending migrations found.");
-        }
-    }
-}

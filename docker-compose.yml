@@ -1,4 +1,4 @@
-version: "3.9"
+﻿version: "3.9"
 
 services:
   db:
@@ -19,23 +19,10 @@ services:
       timeout: 5s
       retries: 5
 
-  db-migrator:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: db-migrator
-    container_name: fairhire-migrator-service
-    env_file:
-      - .env
-    depends_on:
-      db:
-        condition: service_healthy
-
   api:
     build:
       context: .
       dockerfile: Dockerfile
-      target: api
     container_name: fairhire-api-service
     restart: unless-stopped
     ports:
@@ -43,8 +30,8 @@ services:
     env_file:
       - .env
     depends_on:
-      db-migrator:
-        condition: service_completed_successfully
+      db:
+        condition: service_healthy
 
 volumes:
   postgres_data:
