@@ -6,8 +6,10 @@ public sealed class User : IdentityUser<Guid>
 {
     public required string Name { get; set; }
 
-    public List<string>? Skills { get; set; } = [];
+    public CompanyProfile? CompanyProfile { get; set; }
+    public DeveloperProfile? DeveloperProfile { get; set; }
 
-    public List<TestTask>? TestTasks { get; set; } = [];
+
+    public List<TestTask> AssignedTasks { get; set; } = [];
 
 }

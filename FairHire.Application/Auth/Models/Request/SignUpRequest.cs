@@ -4,15 +4,19 @@ namespace FairHire.Application.Auth.Models.Request;
 
 public sealed record SignUpRequest
 {
-    public required string Email { get; set; }
+    public string Email { get; init; } = default!;
+    public string Password { get; init; } = default!;
+    public string ConfPassword { get; init; } = default!;
+    public string? Name { get; init; }
 
-    public required string Password { get; set; }
+    // "company" або "developer"
+    public string Role { get; init; } = default!;
 
-    public required string ConfPassword { get; set; }
+    // Поля для Company-профілю (ігноруються, якщо роль Developer)
+    public string? CompanyName { get; init; }
+    public string? Address { get; init; }
+    public string? Website { get; init; }
 
-    public required string Name { get; set; }
-
-    public required string Role { get; set; }
-
-    public List<string>? Skills { get; set; } = [];
+    // Поля для Developer-профілю (ігноруються, якщо роль Company)
+    public List<string>? Skills { get; init; }
 }

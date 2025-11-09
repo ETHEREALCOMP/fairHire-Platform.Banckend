@@ -4,35 +4,72 @@ using FairHire.Domain;
 using FairHire.Infrastructure.Postgres;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace FairHire.Application.Feature.TestTaskFeature.Commands;
 
-public sealed class CreateTestTaskCommand(AppDbContext context, 
+public sealed class CreateTestTaskCommand(
+    AppDbContext context,
     UserManager<User> userManager)
 {
-    public async Task<BaseResponse> ExecuteAsync(CreateTestTaskRequest request, 
-        CancellationToken ct) 
+    public async Task<BaseResponse> ExecuteAsync(Guid companyUserId,
+        CreateTestTaskRequest request, CancellationToken ct)
     {
-        //var esitTask = await context.TestTasks.Where(x=> x.Title == request.Title)
-        //    .SingleOrDefaultAsync(ct) ?? throw new Exception("Task already exist!");
+        // 1) Валід
+        if (string.IsNullOrWhiteSpace(request.Title))
+            throw new ValidationException("Title is required.");
 
-        var user = await userManager.FindByIdAsync(request.UserId.ToString());
+        var normalizedTitle = request.Title.Trim();
+        var normalizedTitleKey = normalizedTitle.ToUpperInvariant();
 
-        //var company = await context.Companies.Where(x=> x.Id == request.CompanyId)
-        //    .FirstOrDefaultAsync(ct);
+        // 2) Витягуєм профіль компанії і перевіряєм чи він існує?
+        var companyProfile = await context.CompanyProfiles
+            .AsNoTracking()
+            .FirstOrDefaultAsync(c => c.UserId == companyUserId, ct) ??
+            throw new KeyNotFoundException("Company profile not found.");
 
-        var newTask = new TestTask
+        // 3) Якщо є виконавець — перевір існування та роль Developer
+        Guid? assigneeId = null;
+        if (request.AssignedToUserId is Guid devId && devId != Guid.Empty)
         {
-            Title = request.Title,
+            var assignee = await userManager.FindByIdAsync(devId.ToString())
+                ?? throw new KeyNotFoundException("Assignee user not found.");
+
+            var roles = await userManager.GetRolesAsync(assignee);
+            var isDeveloper = roles.Any(r => string.Equals(r, "Developer", StringComparison.OrdinalIgnoreCase));
+            
+            if (!isDeveloper)
+                throw new ValidationException("Assignee user must have 'Developer' role.");
+
+            assigneeId = devId; // тільки FK
+        }
+
+        // 4) Антидубль у межах компанії
+        var titleExists = await context.TestTasks.AsNoTracking()
+            .AnyAsync(t => t.CreatedByCompanyId == companyProfile.UserId 
+            && t.Title == normalizedTitle, ct);
+        
+        if (titleExists)
+            throw new ValidationException("Task with the same title already exists for this company.");
+
+        // 6) Створення
+        var task = new TestTask
+        {
+            Title = normalizedTitle,
+            NormalizedTitle = normalizedTitleKey,
             Description = request.Description,
-            CompanyId = Guid.NewGuid(),
-            UserId = request.UserId,
-            User = user,
+            DueDateUtc = DateTime.UtcNow,
+            Status = "New",
+            CreatedByCompanyId = companyProfile.UserId,
+            AssignedToUserId = assigneeId
         };
 
-        context.Add(newTask);
-        await context.SaveChangesAsync();
+        // 7) Додаємо завдання до списку створення
+        companyProfile.CreatedTasks.Add(task);
+    
+        context.TestTasks.Add(task);
+        await context.SaveChangesAsync(ct);
 
-        return new() { Id = newTask.Id };
+        return new() { Id = task.Id };
     }
 }

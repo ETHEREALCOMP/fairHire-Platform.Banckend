@@ -4,7 +4,8 @@ namespace FairHire.API;
 
 public static class RoleSeeder
 {
-    private static readonly string[] Roles = ["developer", "company"];
+    
+    private static readonly string[] Roles = new[] { "Developer", "Company" };
 
     public static async Task SeedAsync(this IHost app)
     {
@@ -12,7 +13,12 @@ public static class RoleSeeder
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
 
         foreach (var role in Roles)
+        {
             if (!await roleManager.RoleExistsAsync(role))
+            {
+                // RoleManager сам виставить NormalizedName = UPPERCASE
                 await roleManager.CreateAsync(new IdentityRole<Guid>(role));
+            }
+        }
     }
 }
