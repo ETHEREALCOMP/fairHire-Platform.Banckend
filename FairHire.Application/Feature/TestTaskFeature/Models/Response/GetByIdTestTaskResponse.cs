@@ -2,17 +2,16 @@
 
 namespace FairHire.Application.Feature.TestTaskFeature.Models.Responsess;
 
-public sealed class GetByIdTestTaskResponse
+public class GetByIdTestTaskResponse
 {
-    public Guid Id { get; init; }
-    public string Title { get; init; } = default!;
-    public string? Description { get; init; }
-    public DateTime? DueDateUtc { get; init; }
-    public string Status { get; init; } = "New"; // New/InProgress/Done/Rejected/Updated
+    public required Guid Id { get; set; }
+    public required string Title { get; set; }
+    public string? Description { get; set; }
+    public DateTime? DueDateUtc { get; set; }
+    public required string Status { get; set; }
+    public Guid CreatedByCompanyId { get; set; }
+    public CompanyProfile? CreatedByCompany { get; set; }
 
-    // Хто створив (компанія)
-    public Guid CreatedByCompanyId { get; init; }      // FK -> CompanyProfile.UserId
-
-    // Кому призначено (дев-юзер)
-    public Guid? AssignedToUserId { get; init; }        // FK -> AspNetUsers.Id
+    public Guid? AssignedToUserId { get; set; }
+    public User? AssignedToUser { get; set; }
 }

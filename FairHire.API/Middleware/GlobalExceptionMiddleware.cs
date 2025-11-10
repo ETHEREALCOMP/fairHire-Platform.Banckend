@@ -1,8 +1,10 @@
 ﻿namespace FairHire.API.Middleware;
 
-using System.Text.Json;
+using FairHire.API.Problems;
+using FairHire.Application.Exceptions;
 
-public class GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExceptionMiddleware> logger)
+public class GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExceptionMiddleware> logger, 
+    IHostEnvironment env, Problem problem)
 {
     public async Task Invoke(HttpContext ctx)
     {
@@ -14,56 +16,37 @@ public class GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExcep
         {
             logger.LogInformation(oce, "Request canceled by client. TraceId={TraceId}", ctx.TraceIdentifier);
             if (!ctx.Response.HasStarted)
-                ctx.Response.StatusCode = StatusCodes.Status499ClientClosedRequest; // або 400/408 за політикою
+                ctx.Response.StatusCode = StatusCodes.Status499ClientClosedRequest;
         }
         catch (BadHttpRequestException bhe)
         {
-            await WriteProblem(ctx, StatusCodes.Status400BadRequest, "Bad request", bhe);
+            await problem.WriteProblem(ctx, StatusCodes.Status400BadRequest, "Bad request", bhe);
         }
-        catch (ApplicationException aex)
+        catch (DomainValidationException dex)
         {
-            await WriteProblem(ctx, StatusCodes.Status400BadRequest, "Application error", aex);
+            await problem.WriteProblem(ctx, StatusCodes.Status400BadRequest, "DomainValidation", dex);
+        }
+        catch (NotFoundException nex)
+        {
+            await problem.WriteProblem(ctx, StatusCodes.Status404NotFound, "NotFound", nex);
+        }
+        catch (ForbiddenException fex)
+        {
+            await problem.WriteProblem(ctx, StatusCodes.Status403Forbidden, "Forbidden", fex);
         }
         catch (UnauthorizedAccessException uae)
         {
-            await WriteProblem(ctx, StatusCodes.Status403Forbidden, "Forbidden", uae);
+            await problem.WriteProblem(ctx, StatusCodes.Status401Unauthorized, "Unauthorized", uae);
         }
         catch (Exception ex)
         {
-            // Ключ: якщо відповідь вже почалась — тут, у catch, робимо rethrow; (легально)
-            if (ctx.Response.HasStarted)
-            {
-                logger.LogWarning(ex, "Response already started. Cannot write error body. TraceId={TraceId}", ctx.TraceIdentifier);
+            // Do not handle truly fatal exceptions.
+            if (ex is StackOverflowException || ex is OutOfMemoryException || ex is ThreadAbortException)
                 throw;
-            }
-
-            await WriteProblem(ctx, StatusCodes.Status500InternalServerError, "Internal Server Error", ex);
+            // Ключ: якщо відповідь вже почалась — тут, у catch, робимо rethrow; (легально
+            logger.LogWarning(ex, "Response already started. Cannot write error body. TraceId={TraceId}", ctx.TraceIdentifier);
+            await problem.WriteProblem(ctx, StatusCodes.Status500InternalServerError, "Internal Server Error", ex);
         }
-    }
-
-    private async Task WriteProblem(HttpContext ctx, int status, string title, Exception ex)
-    {
-        if (ctx.Response.HasStarted)
-            return;
-
-        ctx.Response.Clear();
-        ctx.Response.StatusCode = status;
-        ctx.Response.ContentType = "application/problem+json";
-
-        var payload = new
-        {
-            type = $"https://httpstatuses.io/{status}",
-            title,
-            status,
-            detail = null as string, // у проді без деталей; у Dev віддати ex.Message
-            instance = ctx.Request.Path.Value,
-            traceId = ctx.TraceIdentifier
-        };
-
-        await ctx.Response.WriteAsync(JsonSerializer.Serialize(payload, new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        }));
     }
 }
 

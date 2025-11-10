@@ -1,0 +1,4 @@
+scrape_configs: 
+- job_name: "fairhire-api" 
+  static_configs:
+  - targets: ["fairhire-api:7074"]

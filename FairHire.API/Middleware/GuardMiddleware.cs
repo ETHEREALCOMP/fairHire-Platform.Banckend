@@ -1,20 +1,11 @@
-﻿using FairHire.API.Contract;
-using FairHire.API.Options;
+﻿using FairHire.API.Options;
+using FairHire.API.Problems;
 using System.Diagnostics;
-using System.Text.Json;
 
 namespace FairHire.API.Middleware;
 
-/// <summary>
-/// Глобальний "периметровий" middleware: базові перевірки для КОЖНОГО запиту
-/// - дозволені методи
-/// - обов'язкові заголовки/Content-Type (де доречно)
-/// - грубий ліміт на Content-Length (без читання тіла)
-/// - лог таймінгу + X-Request-Id у відповідь
-/// </summary>
-
 public sealed class GuardMiddleware(RequestDelegate next, 
-    ILogger<GuardMiddleware> logger, RequestLimitsOptions limits)
+    ILogger<GuardMiddleware> logger, RequestLimitsOptions limits, Problem problem)
 {
     public async Task Invoke(HttpContext ctx)
     {
@@ -32,21 +23,21 @@ public sealed class GuardMiddleware(RequestDelegate next,
         // 1) Дозволені методи
         if (!IsAllowedMethod(ctx.Request.Method, ctx.Request.Path))
         {
-            await WriteProblem(ctx, StatusCodes.Status400BadRequest, "Method not allowed here");
+            await problem.WriteProblem(ctx, StatusCodes.Status405MethodNotAllowed, "Method not allowed here");
             return;
         }
 
         // 2) Базові заголовки
         if (!HasRequiredHeaders(ctx.Request.Headers, ctx.Request.Path, ctx.Request.Method))
         {
-            await WriteProblem(ctx, StatusCodes.Status400BadRequest, "Missing or invalid headers");
+            await problem.WriteProblem(ctx, StatusCodes.Status400BadRequest, "Missing or invalid headers");
             return;
         }
 
         // 3) Content-Length
         if (!IsContentLengthOk(ctx.Request))
         {
-            await WriteProblem(ctx, StatusCodes.Status400BadRequest, "Payload too large");
+            await problem.WriteProblem(ctx, StatusCodes.Status413PayloadTooLarge, "Payload too large");
             return;
         }
 
@@ -70,16 +61,10 @@ public sealed class GuardMiddleware(RequestDelegate next,
     private static bool IsAllowedMethod(string method, PathString path)
     {
         var m = method.ToUpperInvariant();
-
         // службові запити інфраструктури допускаємо
         if (m is "OPTIONS" or "HEAD") return true;
 
-        // приклади вузьких політик
-        if (path.ToString().Contains("/update")) return m is "PATCH";
-        if (path.ToString().Contains("/delete")) return m is "DELETE";
-
-        // дефолтна політика для API: тільки GET/POST
-        return m is "GET" or "POST";
+        return m is "GET" or "POST" or "PATCH" or "DELETE";
     }
 
     // ------------------------------
@@ -104,6 +89,7 @@ public sealed class GuardMiddleware(RequestDelegate next,
         if (!headers.TryGetValue("Content-Type", out var ct)) return false; // немає типу
 
         var mediaType = NormalizeMediaType(ct);
+
         // для API очікуємо application/json
         return mediaType == "application/json";
     }
@@ -137,27 +123,5 @@ public sealed class GuardMiddleware(RequestDelegate next,
 
         // Якщо Content-Length немає (chunked) — залишаємо перевірку нижчим шарам / контролерам
         return true;
-    }
-
-    private static async Task WriteProblem(HttpContext ctx, int status, string title, string? detail = null)
-    {
-        ctx.Response.StatusCode = status;
-        ctx.Response.ContentType = "application/problem+json";
-
-        var payload = new ProblemContract
-        {
-            Type = $"https://httpstatuses.io/{status}",
-            Title = title,
-            Status = status,
-            Detail = detail,
-            Instance = ctx.Request.Path,
-            TraceId = ctx.TraceIdentifier,
-            RequestId = ctx.Response.Headers["X-Request-Id"].ToString()
-        };
-
-        await ctx.Response.WriteAsync(JsonSerializer.Serialize(payload, new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        }));
     }
 }

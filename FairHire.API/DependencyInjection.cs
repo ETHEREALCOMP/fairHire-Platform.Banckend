@@ -1,4 +1,5 @@
 ﻿using FairHire.API.Options;
+using FairHire.API.Problems;
 using FairHire.Application;
 using FairHire.Infrastructure.Postgres;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -25,6 +26,7 @@ public static class DependencyInjection
         {
             ApiMaxBodyBytes = 2L * 1024 * 1024
         });
+        services.AddSingleton<Problem>();
     }
 
     private static void AddAuth(this IServiceCollection services,

@@ -8,7 +8,7 @@ public static class UserEndpoint
 {
     public static void MapUserEndpoints(this IEndpointRouteBuilder app) 
     {
-        app.MapPatch("/user{userId:guid}", async (Guid userId, UpdateUserCommand command,
+        app.MapPatch("/user/{userId:guid}", async (Guid userId, UpdateUserCommand command,
         UpdateUserRequest request, CancellationToken ct) =>
         {
             var result = await command.ExecuteAsync(userId, request, ct);
@@ -17,7 +17,7 @@ public static class UserEndpoint
         }).RequireAuthorization("devOrCompany");
 
 
-        app.MapGet("/user{userId:guid}", async(Guid userId,
+        app.MapGet("/user/{userId:guid}", async(Guid userId,
             GetUserDataQuery query, CancellationToken ct) => 
         {
             var result = await query.ExecuteAsync(userId, ct);

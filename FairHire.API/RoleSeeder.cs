@@ -16,7 +16,6 @@ public static class RoleSeeder
         {
             if (!await roleManager.RoleExistsAsync(role))
             {
-                // RoleManager сам виставить NormalizedName = UPPERCASE
                 await roleManager.CreateAsync(new IdentityRole<Guid>(role));
             }
         }
