@@ -12,23 +12,27 @@ public sealed class GetAllTestTaskQuery(AppDbContext context)
         var companyProfile = await context.CompanyProfiles
             .AsNoTracking()
             .Where(c => c.UserId == companyId)
-            .Select(x => new
+            .SelectMany(c => c.CreatedTasks)
+            .Select(t => new
             {
-                CreatedTasks = x.CreatedTasks.Select(task => new TestTask
-                {
-                    Title = task.Title,
-                    Description = task.Description,
-                    CreatedByCompanyId = companyId
-                }).ToList()
+                t.Id,
+                t.Title,
+                t.Description,
+                t.DueDateUtc,
+                t.Status,
+                t.CreatedByCompanyId,
+                t.AssignedToUserId
             })
-            .FirstOrDefaultAsync(ct);
+            .ToListAsync(ct);
 
         if (companyProfile is null)
             throw new KeyNotFoundException("Company profile not found.");
 
-        return new()
-        {
-            CreatedTasks = companyProfile.CreatedTasks
-        };
+
+        return null;
+        //return new()
+        //{
+        //    CreatedTasks = companyProfile.CreatedTasks
+        //};
     }
 }
