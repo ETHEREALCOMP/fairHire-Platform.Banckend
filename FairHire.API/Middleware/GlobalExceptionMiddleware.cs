@@ -40,6 +40,9 @@ public class GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExcep
         }
         catch (Exception ex)
         {
+            // Do not handle truly fatal exceptions.
+            if (ex is StackOverflowException || ex is OutOfMemoryException || ex is ThreadAbortException)
+                throw;
             // Ключ: якщо відповідь вже почалась — тут, у catch, робимо rethrow; (легально
             logger.LogWarning(ex, "Response already started. Cannot write error body. TraceId={TraceId}", ctx.TraceIdentifier);
             await problem.WriteProblem(ctx, StatusCodes.Status500InternalServerError, "Internal Server Error", ex);
