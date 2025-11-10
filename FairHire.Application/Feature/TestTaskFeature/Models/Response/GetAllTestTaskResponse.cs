@@ -1,8 +1,5 @@
-﻿using FairHire.Domain;
+﻿using FairHire.Application.Feature.TestTaskFeature.Models.Responsess;
 
 namespace FairHire.Application.Feature.TestTaskFeature.Models.Response;
 
-public sealed class GetAllTestTaskResponse
-{
-    public List<TestTask>? CreatedTasks { get; set; } = [];
-}
+public sealed class GetAllTestTaskResponse : GetByIdTestTaskResponse { }

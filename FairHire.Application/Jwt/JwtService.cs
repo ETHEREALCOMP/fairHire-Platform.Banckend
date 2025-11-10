@@ -36,7 +36,7 @@ public class JwtService(IConfiguration configuration)
             audience: audience,
             claims: claims,
             notBefore: now,
-            expires: now.AddMinutes(5), // короткий TTL
+            expires: now.AddMinutes(60),
             signingCredentials: creds
         );
 

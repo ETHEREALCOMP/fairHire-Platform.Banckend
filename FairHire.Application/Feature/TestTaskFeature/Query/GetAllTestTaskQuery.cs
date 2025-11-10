@@ -1,5 +1,5 @@
-﻿using FairHire.Application.Feature.TestTaskFeature.Models.Response;
-using FairHire.Domain;
+﻿using FairHire.Application.Exceptions;
+using FairHire.Application.Feature.TestTaskFeature.Models.Response;
 using FairHire.Infrastructure.Postgres;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,32 +7,29 @@ namespace FairHire.Application.Feature.TestTaskFeature.Queries;
 
 public sealed class GetAllTestTaskQuery(AppDbContext context)
 {
-    public async Task<GetAllTestTaskResponse> ExecuteAsync(Guid companyId, CancellationToken ct)
+    public async Task<List<GetAllTestTaskResponse>> ExecuteAsync(Guid companyId, CancellationToken ct)
     {
-        var companyProfile = await context.CompanyProfiles
+        var company = await context.CompanyProfiles
+            .FirstOrDefaultAsync(x => x.UserId == companyId, ct) 
+            ?? throw new NotFoundException("Company profile not found");
+    
+        var tasks = await context.TestTasks
+            .Where(x => x.CreatedByCompanyId == company.UserId && !x.IsDeleted)
             .AsNoTracking()
-            .Where(c => c.UserId == companyId)
-            .SelectMany(c => c.CreatedTasks)
-            .Select(t => new
+            .Select(x => new GetAllTestTaskResponse
             {
-                t.Id,
-                t.Title,
-                t.Description,
-                t.DueDateUtc,
-                t.Status,
-                t.CreatedByCompanyId,
-                t.AssignedToUserId
+                Id = x.Id,
+                Title = x.Title,
+                Description = x.Description,
+                DueDateUtc = x.DueDateUtc,
+                Status = x.Status,
+                CreatedByCompanyId = x.CreatedByCompanyId,
+                CreatedByCompany = x.CreatedByCompany,
+                AssignedToUserId = x.AssignedToUserId,
+                AssignedToUser = x.AssignedToUser
             })
             .ToListAsync(ct);
 
-        if (companyProfile is null)
-            throw new KeyNotFoundException("Company profile not found.");
-
-
-        return null;
-        //return new()
-        //{
-        //    CreatedTasks = companyProfile.CreatedTasks
-        //};
+        return tasks;
     }
 }
