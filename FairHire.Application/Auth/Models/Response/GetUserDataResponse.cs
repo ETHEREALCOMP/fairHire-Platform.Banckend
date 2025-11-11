@@ -7,10 +7,10 @@ public sealed record GetUserDataResponse
     public Guid Id { get; init; }
     public string Email { get; init; } = default!;
     public string Name { get; init; } = default!;
-    public string[] Roles { get; init; } = Array.Empty<string>();
+    public string[] Roles { get; init; } = [];
 
     public Company? CompanyProfile { get; init; }
-    public Developer? DeveloperProfile { get; init; }
+    public Candidate? CandidateProfile { get; init; }
 
     public sealed class Company
     {
@@ -19,8 +19,8 @@ public sealed record GetUserDataResponse
         public string? Website { get; init; }
     }
 
-    public sealed class Developer
+    public sealed class Candidate
     {
-        public List<string> Skills { get; init; } = [];
+        public List<string> Stacks { get; init; } = [];
     }
 }

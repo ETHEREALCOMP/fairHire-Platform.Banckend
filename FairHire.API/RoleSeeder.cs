@@ -4,8 +4,7 @@ namespace FairHire.API;
 
 public static class RoleSeeder
 {
-    
-    private static readonly string[] Roles = new[] { "Developer", "Company" };
+    private static readonly string[] Roles = { "Developer", "Company", "Admin", "Candidate" };
 
     public static async Task SeedAsync(this IHost app)
     {

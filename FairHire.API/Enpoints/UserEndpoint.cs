@@ -14,7 +14,7 @@ public static class UserEndpoint
             var result = await command.ExecuteAsync(userId, request, ct);
             return Results.Ok(result);
 
-        }).RequireAuthorization("devOrCompany");
+        }).RequireAuthorization("CanOrCompany");
 
 
         app.MapGet("/user/{userId:guid}", async(Guid userId,
@@ -23,6 +23,6 @@ public static class UserEndpoint
             var result = await query.ExecuteAsync(userId, ct);
             return Results.Ok(result);
 
-        }).RequireAuthorization("devOrCompany");
+        }).RequireAuthorization("CanOrCompany");
     }
 }

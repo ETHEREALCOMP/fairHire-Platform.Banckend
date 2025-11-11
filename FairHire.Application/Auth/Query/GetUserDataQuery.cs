@@ -1,20 +1,18 @@
-﻿
-using FairHire.Application.Auth.Models.Response;
+﻿using FairHire.Application.Auth.Models.Response;
 using FairHire.Domain;
 using FairHire.Infrastructure.Postgres;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace FairHire.Application.Auth.Query;
 
-public sealed class GetUserDataQuery(AppDbContext context, UserManager<User> userManager)
+public sealed class GetUserDataQuery(FairHireDbContext context, UserManager<User> userManager)
 {
     public async Task<GetUserDataResponse?> ExecuteAsync(Guid userId, CancellationToken ct)
     {
         var user = await context.Users
             .Include(u => u.CompanyProfile)
-            .Include(u => u.DeveloperProfile)
+            .Include(u => u.CandidateProfile)
             .FirstOrDefaultAsync(u => u.Id == userId, ct) ??
             throw new KeyNotFoundException($"User was not found."); ;
 
@@ -32,9 +30,9 @@ public sealed class GetUserDataQuery(AppDbContext context, UserManager<User> use
                 Address = user.CompanyProfile.Address,
                 Website = user.CompanyProfile.Website
             },
-            DeveloperProfile = user.DeveloperProfile is null ? null : new GetUserDataResponse.Developer
+            CandidateProfile = user.CandidateProfile is null ? null : new GetUserDataResponse.Candidate
             {
-                Skills = user.DeveloperProfile.Skills.ToList()
+                Stacks = user.CandidateProfile.Stacks.ToList()
             }
         };
     }

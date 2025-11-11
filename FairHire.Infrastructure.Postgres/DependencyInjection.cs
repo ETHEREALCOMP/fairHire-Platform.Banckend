@@ -13,7 +13,7 @@ public static class DependencyInjection
     public static void AddPostgresInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         // Implementation for adding Postgres infrastructure services
-        services.AddDbContextPool<AppDbContext>(options =>
+        services.AddDbContextPool<FairHireDbContext>(options =>
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             options.UseNpgsql(connectionString);
@@ -27,7 +27,7 @@ public static class DependencyInjection
             options.Password.RequireNonAlphanumeric = false;
             options.Password.RequiredLength = 6;
         }).AddRoles<IdentityRole<Guid>>()
-        .AddEntityFrameworkStores<AppDbContext>();
+        .AddEntityFrameworkStores<FairHireDbContext>();
 
     }
 }

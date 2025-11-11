@@ -1,6 +1,4 @@
-﻿using FairHire.Domain;
-
-namespace FairHire.Application.Auth.Models.Request;
+﻿namespace FairHire.Application.Auth.Models.Request;
 
 public sealed record SignUpRequest
 {

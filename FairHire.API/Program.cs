@@ -2,7 +2,6 @@ using FairHire.API;
 using FairHire.API.Enpoints;
 using FairHire.API.Middleware;
 using FairHire.Infrastructure.Postgres;
-using Microsoft.EntityFrameworkCore;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 
@@ -21,13 +20,12 @@ opentelemetryBuilder.WithMetrics(
     .AddConsoleExporter()
     .AddPrometheusExporter());
 
-
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    dbContext.Database.Migrate();
+    var dbContext = scope.ServiceProvider.GetRequiredService<FairHireDbContext>();
+    //dbContext.Database.Migrate();
     await app.SeedAsync();
 }
 
@@ -44,7 +42,10 @@ app.UseSwaggerUI();
 
 app.MapAuthEndpoints();
 app.MapUserEndpoints();
-app.MapTestTaskEndpoints();
+app.MapAssessmentEndpoints();
+app.MapSimulationEndpoints();
+app.MapSubmissionEndpoints();
+app.MapTaskTemplateEndpoints();
 app.MapPrometheusScrapingEndpoint();
 
 app.Run();

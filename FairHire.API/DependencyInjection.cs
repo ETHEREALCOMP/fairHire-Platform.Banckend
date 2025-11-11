@@ -27,6 +27,7 @@ public static class DependencyInjection
             ApiMaxBodyBytes = 2L * 1024 * 1024
         });
         services.AddSingleton<Problem>();
+        services.AddValidation();
     }
 
     private static void AddAuth(this IServiceCollection services,
@@ -52,11 +53,13 @@ public static class DependencyInjection
             };
         });
 
-        services.AddAuthorization(o =>
+        services.AddAuthorization(options =>
         {
-            o.AddPolicy("developer", p => p.RequireRole("developer"));
-            o.AddPolicy("company", p => p.RequireRole("company"));
-            o.AddPolicy("devOrCompany", p => p.RequireRole("developer", "company")); // OR
+            options.AddPolicy("Company", p => p.RequireRole("Company"));
+            options.AddPolicy("Candidate", p => p.RequireRole("Candidate"));
+            options.AddPolicy("CanOrCompany", p => p.RequireRole("Company", "Candidate"));
+            options.AddPolicy("CompanyOrAdmin", p => p.RequireRole("Company", "Admin"));
         });
+
     }
 }

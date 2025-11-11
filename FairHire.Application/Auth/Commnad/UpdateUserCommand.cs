@@ -9,9 +9,9 @@ using System.Data;
 
 namespace FairHire.Application.Auth.Commnad
 {
-    public sealed class UpdateUserCommand(UserManager<User> userManager, AppDbContext context)
+    public sealed class UpdateUserCommand(UserManager<User> userManager, FairHireDbContext context)
     {
-        public async Task<BaseResponse> ExecuteAsync(Guid userId, UpdateUserRequest request, CancellationToken ct)
+        public async Task<IdResponse> ExecuteAsync(Guid userId, UpdateUserRequest request, CancellationToken ct)
         {
             // базові перевірки
             if (userId == Guid.Empty)
@@ -19,7 +19,7 @@ namespace FairHire.Application.Auth.Commnad
 
             var user = await context.Users
                 .Include(u => u.CompanyProfile)
-                .Include(u => u.DeveloperProfile)
+                .Include(u => u.CandidateProfile)
                 .FirstOrDefaultAsync(u => u.Id == userId, ct)
                 ?? throw new KeyNotFoundException("User not found.");
 
@@ -47,21 +47,21 @@ namespace FairHire.Application.Auth.Commnad
                 user.CompanyProfile.Website = string.IsNullOrWhiteSpace(request.Website) ? null : request.Website.Trim();
 
             }
-            // оновити DeveloperProfile в іншому випадку
+            // оновити CandidateProfile в іншому випадку
             else
             {
-                if (user.DeveloperProfile is null)
+                if (user.CandidateProfile is null)
                 {
-                    user.DeveloperProfile = new DeveloperProfile
+                    user.CandidateProfile = new CandidateProfile
                     {
                         UserId = user.Id,
-                        Skills = []
+                        Stacks = []
                     };
                 }
 
-                if (request.Skills is not null)
+                if (request.Stacks is not null)
                 {
-                    user.DeveloperProfile.Skills = request.Skills
+                    user.CandidateProfile.Stacks = request.Stacks
                         .Where(s => !string.IsNullOrWhiteSpace(s))
                         .Select(s => s.Trim())
                         .Distinct(StringComparer.OrdinalIgnoreCase)

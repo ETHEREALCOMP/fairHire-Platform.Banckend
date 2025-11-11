@@ -8,9 +8,9 @@ using System.Data;
 
 namespace FairHire.Application.Auth.Commnad;
 
-public sealed class UserSignUpCommand(UserManager<User> userManager, AppDbContext context)
+public sealed class UserSignUpCommand(UserManager<User> userManager, FairHireDbContext context)
 {
-    public async Task<BaseResponse> ExecuteAsync(SignUpRequest request, CancellationToken ct)
+    public async Task<IdResponse> ExecuteAsync(SignUpRequest request, CancellationToken ct)
     {
         // 1) Валідації вводу (базові)
         if (string.IsNullOrWhiteSpace(request.Email))
@@ -68,25 +68,25 @@ public sealed class UserSignUpCommand(UserManager<User> userManager, AppDbContex
                     Website = request.Website?.Trim()
                 });
             }
-            else // Developer
+            else // Candidate
             {
-                var skills = (request.Skills ?? new List<string>())
+                var stacks = (request.Skills ?? new List<string>())
                     .Where(s => !string.IsNullOrWhiteSpace(s))
                     .Select(s => s.Trim())
                     .Distinct(StringComparer.OrdinalIgnoreCase)
                     .ToList();
 
-                context.DeveloperProfiles.Add(new DeveloperProfile
+                context.CandidateProfiles.Add(new CandidateProfile
                 {
                     UserId = user.Id,
-                    Skills = skills
+                    Stacks = stacks
                 });
             }
 
             await context.SaveChangesAsync(ct);
             await trx.CommitAsync(ct);
 
-            return new BaseResponse { Id = user.Id };
+            return new () { Id = user.Id };
         }
         catch
         {
@@ -103,7 +103,7 @@ public sealed class UserSignUpCommand(UserManager<User> userManager, AppDbContex
         return r switch
         {
             "company" => Roles.Company,   // канонічна назва з seed
-            "developer" => Roles.Developer,
+            "candidate" => Roles.Candidate,
             _ => null
         };
     }
@@ -111,6 +111,6 @@ public sealed class UserSignUpCommand(UserManager<User> userManager, AppDbContex
     private static class Roles
     {
         public const string Company = "Company";
-        public const string Developer = "Developer";
+        public const string Candidate = "Candidate";
     }
 }

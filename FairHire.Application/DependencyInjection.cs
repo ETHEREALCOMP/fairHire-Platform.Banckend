@@ -1,8 +1,15 @@
 ﻿using FairHire.Application.Auth.Commnad;
 using FairHire.Application.Auth.Query;
-using FairHire.Application.Feature.TestTaskFeature.Commands;
-using FairHire.Application.Feature.TestTaskFeature.Queries;
-using FairHire.Application.Feature.TestTaskFeature.Query;
+using FairHire.Application.CurrentUser;
+using FairHire.Application.Feature.AssessmentFeature.Command;
+using FairHire.Application.Feature.AssessmentFeature.Query;
+using FairHire.Application.Feature.SimulationFeature.Command;
+using FairHire.Application.Feature.SimulationFeature.Query;
+using FairHire.Application.Feature.SubmissionFeature.Command;
+using FairHire.Application.Feature.SubmissionFeature.Query;
+using FairHire.Application.Feature.TaskFeature.Command;
+using FairHire.Application.Feature.TaskFeature.Query;
+using FairHire.Application.Feature.WorkItemFeature.Command;
 using FairHire.Application.Jwt;
 using FairHire.Domain;
 using Microsoft.AspNetCore.Identity;
@@ -22,6 +29,7 @@ public static class DependencyInjection
         services.AddQuery();
         services.AddSingleton<JwtService>();
         services.AddScoped<SignInManager<User>>();
+        services.AddScoped<ICurrentUser, CurrentUserFromHttp>();
 
     }
 
@@ -33,18 +41,33 @@ public static class DependencyInjection
         services.AddScoped<UserSignUpCommand>();
         services.AddScoped<UpdateUserCommand>();
 
-        services.AddScoped<CreateTestTaskCommand>();
-        services.AddScoped<UpdateTestTaskCommand>();
-        services.AddScoped<DeleteTestTaskCommand>();
-        
+        services.AddScoped<CreateAssessmentCommand>();
+        services.AddScoped<ActivateSimulationCommand>();
+        services.AddScoped<CreateSimulationCommand>();
+        services.AddScoped<FinishSimulationCommand>();
+
+        services.AddScoped<CreateSubmissionCommand>();
+
+        services.AddScoped<ArchiveTaskTemplateCommand>();
+        services.AddScoped<CreateTaskTemplateCommand>();
+        services.AddScoped<DeleteTaskTemplateCommand>();
+        services.AddScoped<UpdateTaskTemplateCommand>();
+
+        services.AddScoped<CreateWorkItemCommand>();
+        services.AddScoped<UpdateWorkItemStatusCommand>();
+
         return services;
     }
 
     private static IServiceCollection AddQuery(this IServiceCollection services)
     {
-        services.AddScoped<GetAllTestTaskQuery>();
-        services.AddScoped<GetByIdTestTaskQuery>();
         services.AddScoped<GetUserDataQuery>();
+        services.AddScoped<GetAssessmentByIdQuery>();
+        services.AddScoped<GetSimulationByIdQuery>();
+        services.AddScoped<GetSubmissionByIdQuery>();
+        services.AddScoped<GetSubmissionsBySimulationQuery>();
+        services.AddScoped<GetTaskTemplateByIdQuery>();
+        services.AddScoped<GetAllTaskTemplatesQuery>();
 
         return services;
     }

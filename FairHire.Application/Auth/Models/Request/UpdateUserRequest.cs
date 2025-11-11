@@ -13,5 +13,5 @@ public sealed record UpdateUserRequest
     [MaxLength(512)] public string? Website { get; init; }
 
     // поля DeveloperProfile (ігноруються, якщо не Developer)
-    public List<string>? Skills { get; init; }
+    public List<string>? Stacks { get; init; }
 }
