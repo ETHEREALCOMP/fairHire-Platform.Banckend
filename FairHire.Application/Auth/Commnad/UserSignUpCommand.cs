@@ -37,7 +37,6 @@ public sealed class UserSignUpCommand(UserManager<User> userManager, FairHireDbC
         // 3) Готуємо об’єкт User (з явною нормалізацією)
         var user = new User
         {
-            Id = Guid.NewGuid(),
             Name = request.Name?.Trim() ?? email,
             UserName = email,
             NormalizedUserName = normalized,

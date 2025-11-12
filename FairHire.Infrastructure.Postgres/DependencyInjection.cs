@@ -13,7 +13,7 @@ public static class DependencyInjection
     public static void AddPostgresInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         // Implementation for adding Postgres infrastructure services
-        services.AddDbContextPool<FairHireDbContext>(options =>
+        services.AddDbContext<FairHireDbContext>(options =>
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             options.UseNpgsql(connectionString);

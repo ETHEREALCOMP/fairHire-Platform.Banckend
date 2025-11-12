@@ -2,6 +2,7 @@ using FairHire.API;
 using FairHire.API.Enpoints;
 using FairHire.API.Middleware;
 using FairHire.Infrastructure.Postgres;
+using Microsoft.EntityFrameworkCore;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 
@@ -25,7 +26,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<FairHireDbContext>();
-    //dbContext.Database.Migrate();
+    dbContext.Database.Migrate();
     await app.SeedAsync();
 }
 
