@@ -55,10 +55,10 @@ public static class DependencyInjection
 
         services.AddAuthorization(options =>
         {
-            options.AddPolicy("Company", p => p.RequireRole("Company"));
-            options.AddPolicy("Candidate", p => p.RequireRole("Candidate"));
-            options.AddPolicy("CanOrCompany", p => p.RequireRole("Company", "Candidate"));
-            options.AddPolicy("CompanyOrAdmin", p => p.RequireRole("Company", "Admin"));
+            options.AddPolicy("Company", p => p.RequireRole("company"));
+            options.AddPolicy("Candidate", p => p.RequireRole("candidate"));
+            options.AddPolicy("CanOrCompany", p => p.RequireRole("company", "candidate"));
+            options.AddPolicy("CompanyOrAdmin", p => p.RequireRole("company", "admin"));
         });
 
     }
