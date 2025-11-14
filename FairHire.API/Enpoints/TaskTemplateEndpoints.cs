@@ -3,8 +3,8 @@ using FairHire.Application.Feature.TaskFeature.Command;
 using FairHire.Application.Feature.TaskFeature.Models.Request;
 using FairHire.Application.Feature.TaskFeature.Query;
 using FairHire.Infrastructure.Postgres;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using System.Security.Claims;
 
 namespace FairHire.API.Enpoints;
@@ -13,6 +13,8 @@ public static class TaskTemplateEndpoints
 {
     public static void MapTaskTemplateEndpoints(this IEndpointRouteBuilder app)
     {
+        var logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
+
         // CREATE
         app.MapPost("/task-templates", async (
             CreateTaskTemplateCommand command,
@@ -21,17 +23,30 @@ public static class TaskTemplateEndpoints
             FairHireDbContext context,
             CancellationToken ct) =>
         {
-            if (!AuthHelpers.TryGetUserId(user, out var callerId))
-                return Results.Unauthorized();
+            try
+            {
+                if (!AuthHelpers.TryGetUserId(user, out var callerId))
+                    return Results.Unauthorized();
 
-            // Переконуємось, що викликає компанія
-            var isCompany = await context.CompanyProfiles.AsNoTracking()
-                .AnyAsync(c => c.UserId == callerId, ct);
-            if (!isCompany) return Results.Forbid();
+                // Переконуємось, що викликає компанія
+                var isCompany = await context.CompanyProfiles.AsNoTracking()
+                    .AnyAsync(c => c.UserId == callerId, ct);
+                if (!isCompany) return Results.Forbid();
 
-            var result = await command.ExecuteAsync(request, ct);
-            return Results.Ok(result);
-        }).RequireAuthorization("Сompany");
+                var result = await command.ExecuteAsync(request, ct);
+                return Results.Ok(result);
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Error in Create task template endpoint: {Message}", ex.Message);
+                throw;
+            }
+            finally
+            {
+                logger.Dispose();
+            }
+
+        }).RequireAuthorization("Company");
 
         // UPDATE
         app.MapPatch("/task-templates/{templateId:guid}", async (
@@ -42,16 +57,29 @@ public static class TaskTemplateEndpoints
             TaskTemplateUpdateRequest request,
             CancellationToken ct) =>
         {
-            if (!AuthHelpers.TryGetUserId(user, out var callerId))
-                return Results.Unauthorized();
+            try
+            {
+                if (!AuthHelpers.TryGetUserId(user, out var callerId))
+                    return Results.Unauthorized();
 
-            var isCompany = await context.CompanyProfiles.AsNoTracking()
-                .AnyAsync(c => c.UserId == callerId, ct);
-            if (!isCompany) return Results.Forbid();
+                var isCompany = await context.CompanyProfiles.AsNoTracking()
+                    .AnyAsync(c => c.UserId == callerId, ct);
+                if (!isCompany) return Results.Forbid();
 
-            await command.ExecuteAsync(templateId, request, ct);
-            return Results.NoContent();
-        }).RequireAuthorization("Сompany");
+                await command.ExecuteAsync(templateId, request, ct);
+                return Results.NoContent();
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Error in Update task template endpoint: {Message}", ex.Message);
+                throw;
+            }
+            finally
+            {
+                logger.Dispose();
+            }
+
+        }).RequireAuthorization("Company");
 
         // ARCHIVE (soft-delete)
         app.MapPost("/task-templates/{templateId:guid}/archive", async (
@@ -61,16 +89,29 @@ public static class TaskTemplateEndpoints
             ArchiveTaskTemplateCommand command,
             CancellationToken ct) =>
         {
-            if (!AuthHelpers.TryGetUserId(user, out var callerId))
-                return Results.Unauthorized();
+            try
+            {
+                if (!AuthHelpers.TryGetUserId(user, out var callerId))
+                    return Results.Unauthorized();
 
-            var isCompany = await context.CompanyProfiles.AsNoTracking()
-                .AnyAsync(c => c.UserId == callerId, ct);
-            if (!isCompany) return Results.Forbid();
+                var isCompany = await context.CompanyProfiles.AsNoTracking()
+                    .AnyAsync(c => c.UserId == callerId, ct);
+                if (!isCompany) return Results.Forbid();
 
-            await command.ExecuteAsync(templateId, ct);
-            return Results.NoContent();
-        }).RequireAuthorization("Сompany");
+                await command.ExecuteAsync(templateId, ct);
+                return Results.NoContent();
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Error in Archive task template endpoint: {Message}", ex.Message);
+                throw;
+            }
+            finally
+            {
+                logger.Dispose();
+            }
+
+        }).RequireAuthorization("Company");
 
         // HARD DELETE (опціонально)
         app.MapDelete("/task-templates/{templateId:guid}", async (
@@ -80,16 +121,29 @@ public static class TaskTemplateEndpoints
             DeleteTaskTemplateCommand command,
             CancellationToken ct) =>
         {
-            if (!AuthHelpers.TryGetUserId(user, out var callerId))
-                return Results.Unauthorized();
+            try
+            {
+                if (!AuthHelpers.TryGetUserId(user, out var callerId))
+                    return Results.Unauthorized();
 
-            var isCompany = await context.CompanyProfiles.AsNoTracking()
-                .AnyAsync(c => c.UserId == callerId, ct);
-            if (!isCompany) return Results.Forbid();
+                var isCompany = await context.CompanyProfiles.AsNoTracking()
+                    .AnyAsync(c => c.UserId == callerId, ct);
+                if (!isCompany) return Results.Forbid();
 
-            await command.ExecuteAsync(templateId, ct);
-            return Results.NoContent();
-        }).RequireAuthorization("Сompany");
+                await command.ExecuteAsync(templateId, ct);
+                return Results.NoContent();
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Error in Delete task template endpoint: {Message}", ex.Message);
+                throw;
+            }
+            finally
+            {
+                logger.Dispose();
+            }
+
+        }).RequireAuthorization("Company");
 
         // GET BY ID
         app.MapGet("/task-templates/{templateId:guid}", async (
@@ -99,13 +153,26 @@ public static class TaskTemplateEndpoints
             FairHireDbContext context,
             CancellationToken ct) =>
         {
-            // Дозвіл: компанія бачить свої; дев/кандидат — лише Active
-            Guid.TryParse(user.FindFirstValue(ClaimTypes.NameIdentifier), out var callerId);
-            var isCompany = callerId != Guid.Empty && await context.CompanyProfiles.AsNoTracking()
-                .AnyAsync(c => c.UserId == callerId, ct);
+            try
+            {
+                // Дозвіл: компанія бачить свої; дев/кандидат — лише Active
+                Guid.TryParse(user.FindFirstValue(ClaimTypes.NameIdentifier), out var callerId);
+                var isCompany = callerId != Guid.Empty && await context.CompanyProfiles.AsNoTracking()
+                    .AnyAsync(c => c.UserId == callerId, ct);
 
-            var dto = await query.ExecuteAsync(templateId, isCompany ? callerId : null, ct);
-            return Results.Ok(dto);
+                var result = await query.ExecuteAsync(templateId, isCompany ? callerId : null, ct);
+                return Results.Ok(result);
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Error in GetById task template endpoint: {Message}", ex.Message);
+                throw;
+            }
+            finally
+            {
+                logger.Dispose();
+            }
+
         }).RequireAuthorization("CanOrCompany");
 
         // LIST (для компанії — свої; для девів — тільки Active)
@@ -117,12 +184,25 @@ public static class TaskTemplateEndpoints
             string? status,
             CancellationToken ct) =>
         {
-            Guid.TryParse(user.FindFirstValue(ClaimTypes.NameIdentifier), out var callerId);
-            var isCompany = callerId != Guid.Empty && await context.CompanyProfiles.AsNoTracking()
-                .AnyAsync(c => c.UserId == callerId, ct);
+            try
+            {
+                Guid.TryParse(user.FindFirstValue(ClaimTypes.NameIdentifier), out var callerId);
+                var isCompany = callerId != Guid.Empty && await context.CompanyProfiles.AsNoTracking()
+                    .AnyAsync(c => c.UserId == callerId, ct);
 
-            var result = await query.ExecuteAsync(isCompany ? callerId : null, q, status, ct);
-            return Results.Ok(result);
+                var result = await query.ExecuteAsync(isCompany ? callerId : null, q, status, ct);
+                return Results.Ok(result);
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Error in List task templates endpoint: {Message}", ex.Message);
+                throw;
+            }
+            finally
+            {
+                logger.Dispose();
+            }
+
         }).RequireAuthorization("CanOrCompany");
     }
 }

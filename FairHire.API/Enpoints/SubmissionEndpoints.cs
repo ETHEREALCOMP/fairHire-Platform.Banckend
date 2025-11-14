@@ -2,6 +2,7 @@
 using FairHire.Application.Feature.SubmissionFeature.Command;
 using FairHire.Application.Feature.SubmissionFeature.Models.Request;
 using FairHire.Application.Feature.SubmissionFeature.Query;
+using Serilog;
 using System.Security.Claims;
 
 namespace FairHire.API.Enpoints;
@@ -10,6 +11,8 @@ public static class SubmissionEndpoints
 {
     public static void MapSubmissionEndpoints(this IEndpointRouteBuilder app)
     {
+        var logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
+
         // CREATE submission (candidate)
         app.MapPost("/submissions", async (
             CreateSubmissionCommand command,
@@ -17,11 +20,24 @@ public static class SubmissionEndpoints
             ClaimsPrincipal user,
             CancellationToken ct) =>
         {
-            if (!AuthHelpers.TryGetUserId(user, out var _))
-                return Results.Unauthorized();
+            try 
+            {
+                if (!AuthHelpers.TryGetUserId(user, out var _))
+                    return Results.Unauthorized();
 
-            var result = await command.ExecuteAsync(request, ct);
-            return Results.Ok(result);
+                var result = await command.ExecuteAsync(request, ct);
+                return Results.Ok(result);
+            } 
+            catch (Exception ex) 
+            { 
+                logger.Error("Error in Create submission endpoint: {Message}", ex.Message); 
+                throw;
+            }
+            finally 
+            {
+                logger.Dispose();
+            }
+
         }).RequireAuthorization("Candidate");
 
         // GET BY ID (company-own or candidate-own)
@@ -31,9 +47,22 @@ public static class SubmissionEndpoints
             ClaimsPrincipal user,
             CancellationToken ct) =>
         {
-            Guid.TryParse(user.FindFirstValue(ClaimTypes.NameIdentifier), out var callerId);
-            var dto = await query.ExecuteAsync(submissionId, callerId, ct);
-            return Results.Ok(dto);
+            try
+            {
+                Guid.TryParse(user.FindFirstValue(ClaimTypes.NameIdentifier), out var callerId);
+                var result = await query.ExecuteAsync(submissionId, callerId, ct);
+                return Results.Ok(result);
+            }
+            catch (Exception ex) 
+            { 
+                logger.Error("Error in Get submission by ID endpoint: {Message}", ex.Message); 
+                throw;
+            }
+            finally 
+            {
+                logger.Dispose();
+            }
+
         }).RequireAuthorization("CanOrCompany");
 
         // LIST BY SIMULATION (company)
@@ -43,10 +72,23 @@ public static class SubmissionEndpoints
             ClaimsPrincipal user,
             CancellationToken ct) =>
         {
-            Guid.TryParse(user.FindFirstValue(ClaimTypes.NameIdentifier), out var callerId);
-            var list = await query.ExecuteAsync(simulationId, callerId, ct);
-            return Results.Ok(list);
-        }).RequireAuthorization("Сompany");
+            try
+            {
+                Guid.TryParse(user.FindFirstValue(ClaimTypes.NameIdentifier), out var callerId);
+                var result = await query.ExecuteAsync(simulationId, callerId, ct);
+                return Results.Ok(result);
+            }
+            catch (Exception ex) 
+            { 
+                logger.Error("Error in Get submissions by simulation endpoint: {Message}", ex.Message); 
+                throw;
+            }
+            finally 
+            {
+                logger.Dispose();
+            }
+
+        }).RequireAuthorization("Company");
     }
 }
 

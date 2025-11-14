@@ -10,6 +10,7 @@ public class GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExcep
     {
         try
         {
+            
             await next(ctx);
         }
         catch (OperationCanceledException oce) when (ctx.RequestAborted.IsCancellationRequested)
