@@ -3,4 +3,5 @@
   <Project Path="FairHire.Application/FairHire.Application.csproj" />
   <Project Path="FairHire.Domain/FairHire.Domain.csproj" />
   <Project Path="FairHire.Infrastructure.Postgres/FairHire.Infrastructure.Postgres.csproj" />
+  <Project Path="FairHire.Tests/FairHire.Tests.csproj" Id="84bec8c5-9371-4efc-88d1-747f1e353382" />
 </Solution>
