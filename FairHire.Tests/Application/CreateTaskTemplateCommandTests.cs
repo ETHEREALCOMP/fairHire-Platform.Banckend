@@ -1,31 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations;
-using FairHire.Application.Feature.TaskFeature.Command;
+﻿using FairHire.Application.Feature.TaskFeature.Command;
 using FairHire.Application.Feature.TaskFeature.Models.Request;
 using FairHire.Domain;
 using FairHire.Domain.Enums;
 using FairHire.Domain.TaskLibrary;
-using FairHire.Infrastructure.Postgres;
+using FairHire.Tests.Domain;
+using FairHire.Tests.Infrastructure;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
-namespace FairHire.Tests;
+namespace FairHire.Tests.Application;
 
 public sealed class CreateTaskTemplateCommandTests
 {
-    private static FairHireDbContext CreateDbContext()
-    {
-        var options = new DbContextOptionsBuilder<FairHireDbContext>()
-            .UseInMemoryDatabase(Guid.NewGuid().ToString())
-            .Options;
-
-        return new FairHireDbContext(options);
-    }
-
     [Fact]
     public async Task ExecuteAsync_WhenCompanyHasProfile_CreatesTemplateSuccessfully()
     {
         // ARRANGE
-        var db = CreateDbContext();
+        using var db = InMemoryFairHireDbContext.CreateDbContext();
 
         var companyId = Guid.NewGuid();
 
@@ -75,7 +66,7 @@ public sealed class CreateTaskTemplateCommandTests
     public async Task ExecuteAsync_WhenTemplateWithSameTitleExists_ThrowsValidationException()
     {
         // ARRANGE
-        var db = CreateDbContext();
+        using var db = InMemoryFairHireDbContext.CreateDbContext();
 
         var companyId = Guid.NewGuid();
 

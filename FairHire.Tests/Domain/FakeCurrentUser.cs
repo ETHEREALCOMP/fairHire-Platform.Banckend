@@ -1,6 +1,6 @@
 ﻿using FairHire.Application.CurrentUser;
 
-namespace FairHire.Tests;
+namespace FairHire.Tests.Domain;
 
 public sealed class FakeCurrentUser : ICurrentUser
 {
