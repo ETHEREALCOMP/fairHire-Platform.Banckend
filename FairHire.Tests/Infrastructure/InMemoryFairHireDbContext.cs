@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace FairHire.Tests.Infrastructure
 {
-    public class InMemoryFairHireDbContext
+    public static class InMemoryFairHireDbContext
     {
         public static FairHireDbContext CreateDbContext()
         {
