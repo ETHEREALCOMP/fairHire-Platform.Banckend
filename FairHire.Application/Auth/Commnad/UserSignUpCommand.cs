@@ -69,7 +69,7 @@ public sealed class UserSignUpCommand(UserManager<User> userManager, FairHireDbC
             }
             else // Candidate
             {
-                var stacks = (request.Skills ?? new List<string>())
+                var stacks = (request.Stacks ?? new List<string>())
                     .Where(s => !string.IsNullOrWhiteSpace(s))
                     .Select(s => s.Trim())
                     .Distinct(StringComparer.OrdinalIgnoreCase)
@@ -78,6 +78,10 @@ public sealed class UserSignUpCommand(UserManager<User> userManager, FairHireDbC
                 context.CandidateProfiles.Add(new CandidateProfile
                 {
                     UserId = user.Id,
+                    Timezone = request.Timezone,
+                    Level = request.Level,
+                    About = request.About,
+                    OpenToWork = request.OpenToWork,
                     Stacks = stacks
                 });
             }
