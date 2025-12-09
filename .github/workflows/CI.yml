@@ -64,12 +64,14 @@ jobs:
             path: ./publish
         
         - name: Upload test results
+          if: runner.os == 'Linux'
           uses: actions/upload-artifact@v4
           with:
             name: test-results
             path: '**/TestResults/*.trx'
             
         - name: Upload coverage
+          if: runner.os == 'Linux'
           uses: actions/upload-artifact@v4
           with:
             name: coverage
