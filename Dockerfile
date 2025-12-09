@@ -8,7 +8,7 @@ COPY FairHire.Application/FairHire.Application.csproj ./FairHire.Application/
 COPY FairHire.Domain/FairHire.Domain.csproj ./FairHire.Domain/
 COPY FairHire.Infrastructure.Postgres/FairHire.Infrastructure.Postgres.csproj ./FairHire.Infrastructure.Postgres/
 
-RUN dotnet restore "fairHire.slnx"
+RUN dotnet restore "FairHire.API/FairHire.API.csproj"
 
 COPY . .
 
