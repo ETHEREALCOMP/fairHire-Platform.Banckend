@@ -22,3 +22,5 @@ jobs:
           run: dotnet restore fairHire.slnx
         - name: Build
           run: dotnet build fairHire.slnx --configuration Release --no-restore
+        - name: Test
+          run: dotnet test fairHire.slnx --configuration Release --no-build
