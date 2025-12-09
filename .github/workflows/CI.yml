@@ -6,10 +6,15 @@ on:
     branches: [ "main" ]
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    runs-on: ${{matrix.os}}
+    strategy: 
+      matrix:
+        OS: [ubuntu-latest, windows-latest]
+        
     env:
       ConnectionStrings__Default: ${{ secrets.ConnectionStrings__DefaultConnection }}
       Jwt__Key: ${{ secrets.JWT__Key }}
+      
     steps:
         - name: Checkout
           uses: actions/checkout@v5
@@ -18,9 +23,49 @@ jobs:
           uses: actions/setup-dotnet@v5
           with:
             dotnet-version: "10.0.x"
+            
+        - name: Cache Nuget
+          uses: actions/cache@4
+          with: 
+            path: ~/.nuget/packages
+            key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+            restore-keys: |
+              ${{ runner.os }}-nuget-
+              
         - name: Restore
           run: dotnet restore fairHire.slnx
+          
         - name: Build
           run: dotnet build fairHire.slnx --configuration Release --no-restore
+          
         - name: Test
           run: dotnet test fairHire.slnx --configuration Release --no-build
+          
+        - name: Test with coverage
+          run: dotnet test fairHire.slnx --configuration Release --no-build --collect:"XPlat Code Coverage"
+
+        - name: Check vulnerable packages
+          run: dotnet list package --vulnerable --include-transitive 
+
+        - name: Build Docker image
+          run: docker build -t fairhire-backend .
+        
+        - name: Publish
+          run: dotnet publish src/FairHire.Api/FairHire.Api.csproj -c Release -o ./publish
+
+        - name: Upload publish artifact
+          uses: actions/upload-artifact@v4
+          with: 
+            name: fairhire-backend
+            path: ./publish
+        
+        - name: Upload test results
+          uses: actions/upload-artifact@v4
+          with:
+            name: test-results
+            path: '**/TestResults/*.trx'
+        - name: Upload coverage
+          uses: actions/upload-artifact@v4
+          with:
+            name: coverage
+            path: '**/TestResults/*/coverage.cobertura.xml'
