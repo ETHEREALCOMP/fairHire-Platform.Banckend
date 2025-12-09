@@ -4,6 +4,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+    
 jobs:
   build-and-test:
     runs-on: ${{ matrix.os }}
@@ -48,12 +49,15 @@ jobs:
           run: dotnet list package --vulnerable --include-transitive 
 
         - name: Build Docker image
+          if: runner.os == 'Linux'
           run: docker build -t fairhire-backend .
         
         - name: Publish
+          if: runner.os == 'Linux'
           run: dotnet publish FairHire.API/FairHire.API.csproj -c Release -o ./publish
 
         - name: Upload publish artifact
+          if: runner.os == 'Linux'
           uses: actions/upload-artifact@v4
           with: 
             name: fairhire-backend
@@ -64,6 +68,7 @@ jobs:
           with:
             name: test-results
             path: '**/TestResults/*.trx'
+            
         - name: Upload coverage
           uses: actions/upload-artifact@v4
           with:
