@@ -6,10 +6,10 @@ on:
     branches: [ "main" ]
 jobs:
   build-and-test:
-    runs-on: ${{matrix.os}}
-    strategy: 
+    runs-on: ${{ matrix.os }}
+    strategy:
       matrix:
-        OS: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest]
         
     env:
       ConnectionStrings__Default: ${{ secrets.ConnectionStrings__DefaultConnection }}
@@ -51,7 +51,7 @@ jobs:
           run: docker build -t fairhire-backend .
         
         - name: Publish
-          run: dotnet publish src/FairHire.Api/FairHire.Api.csproj -c Release -o ./publish
+          run: dotnet publish FairHire.API/FairHire.API.csproj -c Release -o ./publish
 
         - name: Upload publish artifact
           uses: actions/upload-artifact@v4
