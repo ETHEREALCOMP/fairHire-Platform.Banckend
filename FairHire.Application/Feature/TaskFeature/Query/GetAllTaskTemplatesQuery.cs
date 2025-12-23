@@ -18,7 +18,7 @@ public sealed class GetAllTaskTemplatesQuery(FairHireDbContext db)
         string? status,
         CancellationToken ct)
     {
-        IQueryable<TaskTemplate> query = db.TaskTemplates.AsNoTracking();
+        var query = db.TaskTemplates.AsNoTracking();
 
         if (callerCompanyId is Guid companyId)
         {
